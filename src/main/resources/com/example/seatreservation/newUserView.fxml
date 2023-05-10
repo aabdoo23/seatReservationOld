@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="mainPanel" prefHeight="298.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.seatreservation.NewUserView">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="ID:" />
+      <TextField fx:id="tfID" layoutX="37.0" layoutY="10.0" />
+      <Label layoutX="214.0" layoutY="14.0" text="Name:" />
+      <TextField fx:id="tfName" layoutX="256.0" layoutY="9.0" prefHeight="26.0" prefWidth="201.0" />
+      <Label layoutX="14.0" layoutY="54.0" text="Email:" />
+      <TextField fx:id="tfEmail" layoutX="53.0" layoutY="50.0" prefHeight="26.0" prefWidth="134.0" />
+      <Label layoutX="214.0" layoutY="54.0" text="Phone number:" />
+      <TextField fx:id="tfPN" layoutX="302.0" layoutY="50.0" prefHeight="26.0" prefWidth="156.0" />
+      <Label layoutX="14.0" layoutY="95.0" text="Password:" />
+      <Label layoutX="214.0" layoutY="95.0" text="Confirm your password:" />
+      <PasswordField fx:id="pfPW1" layoutX="76.0" layoutY="91.0" prefHeight="26.0" prefWidth="112.0" />
+      <PasswordField fx:id="pfPW2" layoutX="346.0" layoutY="91.0" prefHeight="26.0" prefWidth="112.0" />
+      <CheckBox fx:id="cbCC" layoutX="15.0" layoutY="134.0" mnemonicParsing="false" onAction="#clickCB" text="Add credit card" />
+      <Label layoutX="14.0" layoutY="177.0" text="Card number:" />
+      <TextField fx:id="tfCN" layoutX="95.0" layoutY="173.0" prefHeight="26.0" prefWidth="186.0" />
+      <Label layoutX="289.0" layoutY="177.0" text="Expires on:" />
+      <DatePicker fx:id="dpExpDate" layoutX="355.0" layoutY="174.0" prefHeight="26.0" prefWidth="104.0" />
+      <Label layoutX="14.0" layoutY="220.0" text="CVV:" />
+      <Label layoutX="119.0" layoutY="220.0" text="Card holder name:" />
+      <TextField fx:id="tfCHN" layoutX="225.0" layoutY="216.0" prefHeight="26.0" prefWidth="236.0" />
+      <PasswordField fx:id="pfCvv" layoutX="47.0" layoutY="216.0" prefHeight="26.0" prefWidth="53.0" />
+      <Button fx:id="saveButton" layoutX="358.0" layoutY="257.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="104.0" text="Save" />
+   </children>
+</AnchorPane>
