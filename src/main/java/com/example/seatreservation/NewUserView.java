@@ -40,7 +40,7 @@ public class NewUserView implements Initializable {
     @FXML
     public Button saveButton=new Button();
     int id=globals.createNewRandomID(globals.usersIDs);
-    public void save(ActionEvent event){
+    public void save(ActionEvent event) {
         String email = tfEmail.getText();
         String first = tfName.getText();
         String pn = tfPN.getText();

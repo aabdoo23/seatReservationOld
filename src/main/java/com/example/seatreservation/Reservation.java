@@ -7,17 +7,26 @@ public class Reservation {
     private Hall hall;
     private Movie movie;
 
-    public Reservation(int reservationID,double price, User user, Hall hall) {
+    public Reservation(int reservationID,double price, User user, Hall hall,Movie movie) {
         this.reservationID = reservationID;
         this.price=price;
         this.user = user;
         this.hall=hall;
+        this.movie=movie;
     }
+
 
     public Reservation() {
 
     }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
 
     public void setReservationID(int reservationID) {
         this.reservationID = reservationID;
