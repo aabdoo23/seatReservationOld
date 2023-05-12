@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Hall {
     int ID;
     int rows,columns;
-    LinkedList<SeatingClasses>seatingClasses;
+    SeatingClasses seatingClass1,seatingClass2,seatingClass3;
     int[][] seats;
 
     Hall(int ID,int rows,int columns){
@@ -34,17 +34,32 @@ public class Hall {
         this.rows = rows;
     }
 
-    public void setSeatingClasses(LinkedList<SeatingClasses> seatingClasses) {
-        this.seatingClasses = seatingClasses;
+    public SeatingClasses getSeatingClass1() {
+        return seatingClass1;
+    }
+
+    public SeatingClasses getSeatingClass2() {
+        return seatingClass2;
+    }
+
+    public SeatingClasses getSeatingClass3() {
+        return seatingClass3;
+    }
+
+    public void setSeatingClass1(SeatingClasses seatingClass1) {
+        this.seatingClass1 = seatingClass1;
+    }
+    public void setSeatingClass2(SeatingClasses seatingClass2) {
+        this.seatingClass2 = seatingClass2;
+    }
+    public void setSeatingClass3(SeatingClasses seatingClass3) {
+        this.seatingClass3 = seatingClass3;
     }
 
     public int[][] getSeats() {
         return seats;
     }
 
-    public LinkedList<SeatingClasses> getSeatingClasses() {
-        return seatingClasses;
-    }
 
     public int getID() {
         return ID;

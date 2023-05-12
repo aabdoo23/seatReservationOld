@@ -5,12 +5,38 @@ import java.time.LocalTime;
 
 public class Movie {
     int ID,screenTime;
-    String movieName;
+    String movieName,description,img;
     LocalTime playTime;
     LocalDate releaseDate;
+    Movie(){}
+    Movie(int id,int st,String mn,String dc,String img,LocalTime pt,LocalDate rd){
+        this.ID=id;
+        this.screenTime=st;
+        this.movieName=mn;
+        this.description=dc;
+        this.img=img;
+        this.playTime=pt;
+        this.releaseDate=rd;
+    }
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImg() {
+        return img;
     }
 
     public void setMovieName(String movieName) {

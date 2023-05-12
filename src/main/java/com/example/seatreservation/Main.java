@@ -21,6 +21,8 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml"))));
         grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newUserView.fxml"))));
+        grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newHall.fxml"))));
+
 //        root.getChildren().add(grids.get(0));
         root=getPane(0);
 
