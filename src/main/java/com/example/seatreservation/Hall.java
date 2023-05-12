@@ -6,18 +6,32 @@ import java.util.Vector;
 public class Hall {
     int ID;
     int rows,columns;
+    String name;
     SeatingClasses seatingClass1,seatingClass2,seatingClass3;
     int[][] seats;
 
-    Hall(int ID,int rows,int columns){
+    Hall(int ID,String name,int rows,int columns,SeatingClasses sc1,SeatingClasses sc2,SeatingClasses sc3){
         this.ID=ID;
+        this.name=name;
         this.rows=rows;
         this.columns=columns;
+        this.seatingClass1=sc1;
+        this.seatingClass2=sc2;
+        this.seatingClass3=sc3;
         this.seats=new int[rows][columns];
     }
     public int getRows() {
         return rows;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void setSeats(int[][] seats) {
         this.seats = seats;
     }

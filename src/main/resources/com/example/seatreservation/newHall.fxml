@@ -20,16 +20,16 @@
       <Label layoutX="15.0" layoutY="92.0" text="First class number of rows:" />
       <Spinner fx:id="FCNspinner" layoutX="163.0" layoutY="88.0" prefHeight="26.0" prefWidth="94.0" />
       <Label layoutX="281.0" layoutY="92.0" text="First class seat price:" />
-      <TextField fx:id="tfFCP" layoutX="395.0" layoutY="89.0" prefHeight="26.0" prefWidth="124.0" />
       <Label layoutX="15.0" layoutY="135.0" text="Second class number of rows:" />
       <Spinner fx:id="SCNspinner" layoutX="182.0" layoutY="131.0" prefHeight="26.0" prefWidth="94.0" />
       <Label layoutX="296.0" layoutY="135.0" text="Second class seat price:" />
-      <TextField fx:id="tfSCP" layoutX="425.0" layoutY="131.0" prefHeight="26.0" prefWidth="94.0" />
       <Label layoutX="12.0" layoutY="176.0" text="Third class number of rows:" />
       <Spinner fx:id="TCNspinner" layoutX="166.0" layoutY="172.0" prefHeight="26.0" prefWidth="94.0" />
       <Label layoutX="278.0" layoutY="176.0" text="Third class seat price:" />
-      <TextField fx:id="tfTCP" layoutX="396.0" layoutY="171.0" prefHeight="26.0" prefWidth="124.0" />
       <Button fx:id="saveButton" layoutX="426.0" layoutY="213.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Save" />
       <TextField fx:id="tfSeats" editable="false" layoutX="377.0" layoutY="51.0" prefHeight="26.0" prefWidth="142.0" />
+      <Spinner fx:id="tfFCP" layoutX="395.0" layoutY="89.0" prefHeight="25.0" prefWidth="124.0" />
+      <Spinner fx:id="tfSCP" layoutX="425.0" layoutY="131.0" prefHeight="25.0" prefWidth="94.0" />
+      <Spinner fx:id="tfTCP" layoutX="396.0" layoutY="171.0" prefHeight="25.0" prefWidth="124.0" />
    </children>
 </AnchorPane>
