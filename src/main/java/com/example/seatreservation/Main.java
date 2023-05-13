@@ -19,7 +19,7 @@ public class Main extends Application {
 //    Scene scene=new Scene(root);
     @Override
     public void start(Stage stage) throws IOException {
-        grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml"))));
+        grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainMenu.fxml"))));
         grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newUserView.fxml"))));
         grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newHall.fxml"))));
 

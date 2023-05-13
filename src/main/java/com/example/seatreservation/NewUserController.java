@@ -1,7 +1,6 @@
 package com.example.seatreservation;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +10,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class NewUserView implements Initializable {
+public class NewUserController implements Initializable {
     @FXML
     public TextField tfID;
     @FXML
