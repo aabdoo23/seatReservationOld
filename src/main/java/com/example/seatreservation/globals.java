@@ -1,5 +1,12 @@
 package com.example.seatreservation;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextFormatter;
+
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -13,6 +20,8 @@ public class globals {
     public static boolean[] reservationsIDs = new boolean[2000];
     public static boolean[] ticketsIDs = new boolean[2000];
     public static boolean[] hallsIDs = new boolean[2000];
+    public static boolean[] partiesIDs = new boolean[2000];
+
     public static boolean[] moviesIDs = new boolean[2000];
 
     public static int createNewRandomID(boolean[] v) {
@@ -25,54 +34,72 @@ public class globals {
         return x;
     }
     public static int createNewSeqID(boolean[] v) {
-        for (int i=0;i<v.length;i++){
+        for (int i=1;i<v.length;i++){
             if(!v[i]){
                 return i;
             }
         }
         return 0;
     }
-//    public static void makeList(LinkedList linkedList, JList<String> list) {
-//        String[] strings = new String[linkedList.size()];
-//        int i = 0;
-//        for (Object ob : linkedList) {
-//            strings[i] = ob.toString();
-//            i++;
-//        }
-//        list.setListData(strings);
-//    }
-//    public static String[] makeList(LinkedList linkedList) {
-//        String[] strings = new String[linkedList.size()];
-//        int i = 0;
-//        for (Object ob : linkedList) {
-//            strings[i] = ob.toString();
-//            i++;
-//        }
-//        return strings;
-//    }
-//    public static void makeList(String[] strings, JList<String> list) {
-//        list.setListData(strings);
-//    }
-//    public static void makeList(LinkedList linkedList, JComboBox<String> list) {
-//
-//        String[] strings = new String[linkedList.size()];
-//        int i = 0;
-//        for (Object ob : linkedList) {
-//            strings[i] = ob.toString();
-//            i++;
-//        }
-//        list.setModel(new DefaultComboBoxModel<>(strings));
-//    }
-//    public static void defaultMakeList(LinkedList linkedList, JComboBox<String> list) {
-//
-//        String[] strings = new String[linkedList.size()+1];
-//        strings[0]="-";
-//        int i = 1;
-//        for (Object ob : linkedList) {
-//            strings[i] = ob.toString();
-//            i++;
-//        }
-//        list.setModel(new DefaultComboBoxModel<>(strings));
-//    }
+    public static void spinnerTF(Spinner<Integer> spinner) {
+        spinner.getEditor().setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                return change;
+            } else {
+                return null;
+            }
+        }));
+    }
+    public static void makeList(LinkedList linkedList, ListView<String> list) {
+        String[] strings = new String[linkedList.size()];
+        int i = 0;
+        for (Object ob : linkedList) {
+            strings[i] = ob.toString();
+            i++;
+        }
+        ObservableList<String>obs= FXCollections.observableArrayList(strings);
+        list.setItems(obs);
+    }
+    public static String[] makeList(LinkedList linkedList) {
+        String[] strings = new String[linkedList.size()];
+        int i = 0;
+        for (Object ob : linkedList) {
+            strings[i] = ob.toString();
+            i++;
+        }
+        return strings;
+    }
+    public static ObservableList<String> makeObsList(LinkedList linkedList) {
+        String[] strings = new String[linkedList.size()];
+        int i = 0;
+        for (Object ob : linkedList) {
+            strings[i] = ob.toString();
+            i++;
+        }
+        return FXCollections.observableArrayList(strings);
+    }
+    public static void makeList(LinkedList linkedList, ComboBox<String> list) {
+
+        String[] strings = new String[linkedList.size()];
+        int i = 0;
+        for (Object ob : linkedList) {
+            strings[i] = ob.toString();
+            i++;
+        }
+
+        ObservableList<String>obs= FXCollections.observableArrayList(strings);
+        list.setItems(obs);
+    }
+    public static void defaultMakeList(LinkedList linkedList, ComboBox<String> list) {
+        String[] strings = new String[linkedList.size()+1];
+        strings[0]="-";
+        int i = 1;
+        for (Object ob : linkedList) {
+            strings[i] = ob.toString();
+            i++;
+        }
+        ObservableList<String>obs= FXCollections.observableArrayList(strings);
+        list.setItems(obs);
+    }
 
 }

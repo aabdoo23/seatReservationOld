@@ -39,11 +39,19 @@ public class NewMovieController implements Initializable {
     }
     public void selectIMG(){
         FileChooser fileChooser=new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.jpg,*.jpeg,*.png,*.hvec"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.JPG","*.jpeg","*.png","*.jpg"));
         file=fileChooser.showOpenDialog(null);
         tfPath.setText(file.getAbsolutePath());
     }
     public void saveButton(ActionEvent event) {
+//        if (tfMovieName.getText().isEmpty() || tfScreenTime.getText().isEmpty() || tfPN.getText().isEmpty() || pw.isEmpty()) {
+//            Alert alert=new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("ERROR");
+//            alert.setContentText("Error: Please fill all information");
+//            alert.showAndWait();
+//            return;
+//        }
+
         Movie movie=new Movie();
         movie.setID(id);
         movie.setMovieName(tfMovieName.getText());
@@ -53,6 +61,10 @@ public class NewMovieController implements Initializable {
         movie.setReleaseDate(dpReleaseDate.getValue());
         movie.setImg(file);
         globals.moviesLinkedList.add(movie);
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmed");
+        alert.setContentText("Movie registered");
+        alert.showAndWait();
 
     }
 }

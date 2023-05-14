@@ -28,15 +28,25 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-    public void login(){
+    public void login() throws IOException {
         if(tfID.getText().isEmpty()||pfPW.getText().isEmpty()){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Empty fields");
             alert.showAndWait();
+            return;
         }
         int id=Integer.parseInt(tfID.getText());
         String pw=pfPW.getText();
+        if(id==1&& Objects.equals(pw, "1")){
+            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newHall.fxml")));
+            Scene scene=new Scene(root);
+            Stage stage=new Stage();
+            stage.setTitle("new user");
+            stage.setScene(scene);
+            stage.show();
+            return;
+        }
         for (User user:globals.userLinkedList){
             if (user.getID()==id){
                 if(Objects.equals(user.getPassword(), pw)){
@@ -47,9 +57,12 @@ public class MainMenuController implements Initializable {
                     alert.setTitle("Error");
                     alert.setContentText("Invalid password");
                     alert.showAndWait();
+                    return;
                 }
             }
         }
+        tfID.setText("");
+        pfPW.setText("");
     }
     public void open() throws IOException {
         Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newUserView.fxml")));

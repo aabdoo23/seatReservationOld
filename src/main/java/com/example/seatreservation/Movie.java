@@ -3,13 +3,15 @@ package com.example.seatreservation;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedList;
 
 public class Movie {
-    int ID,screenTime;
-    String movieName,description;
-    File img;
-    LocalTime playTime;
-    LocalDate releaseDate;
+    private int ID,screenTime;
+    private String movieName,description;
+    private File img;
+    private LocalTime playTime;
+    private LocalDate releaseDate;
+    private LinkedList<Party>parties;
     Movie(){}
     Movie(int id,int st,String mn,String dc,File img,LocalTime pt,LocalDate rd){
         this.ID=id;
@@ -23,6 +25,16 @@ public class Movie {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public LinkedList<Party> getParties() {
+        return parties;
+    }
+    public void addToParties(Party party){
+        this.parties.add(party);
+    }
+    public void removeFromParties(Party party){
+        this.parties.remove(party);
     }
 
     public void setDescription(String description) {
@@ -74,6 +86,11 @@ public class Movie {
     }
 
     public String getMovieName() {
+        return movieName;
+    }
+
+    @Override
+    public String toString() {
         return movieName;
     }
 }

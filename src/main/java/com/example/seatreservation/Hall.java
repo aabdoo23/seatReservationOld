@@ -1,5 +1,6 @@
 package com.example.seatreservation;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -81,5 +82,14 @@ public class Hall {
 
     public int getColumns() {
         return columns;
+    }
+
+    @Override
+    public String toString() {
+        return "Hall" +
+                "\n, ID=" + ID +
+                "\n, rows=" + rows +
+                "\n, columns=" + columns +
+                "\n, name=" + name ;
     }
 }
