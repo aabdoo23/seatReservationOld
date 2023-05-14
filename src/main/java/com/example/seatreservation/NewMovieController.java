@@ -4,6 +4,8 @@ import com.gluonhq.charm.glisten.control.TimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -25,10 +27,10 @@ public class NewMovieController implements Initializable {
     public AnchorPane mainPanel;
     public Spinner<Integer> hrsSpinner;
     public Spinner<Integer> minSpinner;
-    public TextField tfPath;
+    public ImageView tfPath;
     public Button selectPathBtn;
     int id=0;
-    File file;
+    Image image;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hrsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23 ));
@@ -40,8 +42,9 @@ public class NewMovieController implements Initializable {
     public void selectIMG(){
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.JPG","*.jpeg","*.png","*.jpg"));
-        file=fileChooser.showOpenDialog(null);
-        tfPath.setText(file.getAbsolutePath());
+        String path= fileChooser.showOpenDialog(null).getAbsolutePath();
+        Image image=new Image(path);
+        tfPath.setImage(image);
     }
     public void saveButton(ActionEvent event) {
 //        if (tfMovieName.getText().isEmpty() || tfScreenTime.getText().isEmpty() || tfPN.getText().isEmpty() || pw.isEmpty()) {
@@ -59,7 +62,7 @@ public class NewMovieController implements Initializable {
         LocalTime lt=LocalTime.of(hrsSpinner.getValue(),minSpinner.getValue());
         movie.setPlayTime(lt);
         movie.setReleaseDate(dpReleaseDate.getValue());
-        movie.setImg(file);
+        movie.setImg(image);
         globals.moviesLinkedList.add(movie);
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmed");

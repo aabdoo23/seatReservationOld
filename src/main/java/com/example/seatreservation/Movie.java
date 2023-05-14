@@ -1,5 +1,7 @@
 package com.example.seatreservation;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,12 +10,12 @@ import java.util.LinkedList;
 public class Movie {
     private int ID,screenTime;
     private String movieName,description;
-    private File img;
+    private Image img;
     private LocalTime playTime;
     private LocalDate releaseDate;
     private LinkedList<Party>parties;
     Movie(){}
-    Movie(int id,int st,String mn,String dc,File img,LocalTime pt,LocalDate rd){
+    Movie(int id, int st, String mn, String dc, Image img, LocalTime pt, LocalDate rd){
         this.ID=id;
         this.screenTime=st;
         this.movieName=mn;
@@ -41,7 +43,7 @@ public class Movie {
         this.description = description;
     }
 
-    public void setImg(File img) {
+    public void setImg(Image img) {
         this.img = img;
     }
 
@@ -49,7 +51,7 @@ public class Movie {
         return description;
     }
 
-    public File getImg() {
+    public Image getImg() {
         return img;
     }
 

@@ -2,10 +2,7 @@ package com.example.seatreservation;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -14,6 +11,8 @@ public class globals {
     public static LinkedList<User>userLinkedList=new LinkedList<>();
     public static LinkedList<Reservation>ticketsLinkedList=new LinkedList<>();
     public static LinkedList<Movie>moviesLinkedList=new LinkedList<>();
+    public static LinkedList<Party>partyLinkedList=new LinkedList<>();
+
     public static LinkedList<Hall>hallsLinkedList=new LinkedList<>();
 
     public static boolean[] usersIDs = new boolean[2000];
@@ -78,7 +77,7 @@ public class globals {
         }
         return FXCollections.observableArrayList(strings);
     }
-    public static void makeList(LinkedList linkedList, ComboBox<String> list) {
+    public static void makeList(LinkedList linkedList, ChoiceBox<String> list) {
 
         String[] strings = new String[linkedList.size()];
         int i = 0;
