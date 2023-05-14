@@ -40,8 +40,8 @@ public class newHallController implements Initializable {
     }
     public void updateDisplay(){
         FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()-(SCNspinner.getValue()+ TCNspinner.getValue())));
-        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()-(FCNspinner.getValue()+ TCNspinner.getValue())));;
-        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()-(SCNspinner.getValue()+ FCNspinner.getValue())));;
+        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()-(FCNspinner.getValue()+ TCNspinner.getValue())));
+        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()-(SCNspinner.getValue()+ FCNspinner.getValue())));
         tfSeats.setText(Integer.toString(rowsSpinner.getValue()*columnSpinner.getValue()));
     }
     public void saveButtonC(){

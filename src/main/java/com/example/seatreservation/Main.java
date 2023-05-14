@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class Main extends Application {
 
 //        root.getChildren().add(grids.get(0));
         root=getPane(0);
+
 
 //        root=getPane(1);
         Scene scene = new Scene(root, 320, 240);

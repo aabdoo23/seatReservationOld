@@ -1,15 +1,17 @@
 package com.example.seatreservation;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Movie {
     int ID,screenTime;
-    String movieName,description,img;
+    String movieName,description;
+    File img;
     LocalTime playTime;
     LocalDate releaseDate;
     Movie(){}
-    Movie(int id,int st,String mn,String dc,String img,LocalTime pt,LocalDate rd){
+    Movie(int id,int st,String mn,String dc,File img,LocalTime pt,LocalDate rd){
         this.ID=id;
         this.screenTime=st;
         this.movieName=mn;
@@ -27,7 +29,7 @@ public class Movie {
         this.description = description;
     }
 
-    public void setImg(String img) {
+    public void setImg(File img) {
         this.img = img;
     }
 
@@ -35,7 +37,7 @@ public class Movie {
         return description;
     }
 
-    public String getImg() {
+    public File getImg() {
         return img;
     }
 

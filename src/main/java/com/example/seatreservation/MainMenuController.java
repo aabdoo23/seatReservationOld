@@ -29,6 +29,12 @@ public class MainMenuController implements Initializable {
 
     }
     public void login(){
+        if(tfID.getText().isEmpty()||pfPW.getText().isEmpty()){
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Empty fields");
+            alert.showAndWait();
+        }
         int id=Integer.parseInt(tfID.getText());
         String pw=pfPW.getText();
         for (User user:globals.userLinkedList){
