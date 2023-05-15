@@ -11,18 +11,18 @@ public class Movie {
     private int ID,screenTime;
     private String movieName,description;
     private Image img;
-    private LocalTime playTime;
+//    private LocalTime playTime;
     private LocalDate releaseDate;
-    private LinkedList<Party>parties;
+    private LinkedList<Party>parties=new LinkedList<>();
     Movie(){}
-    Movie(int id, int st, String mn, String dc, Image img, LocalTime pt, LocalDate rd){
+    Movie(int id, int st, String mn, String dc, Image img, LocalDate rd){
         this.ID=id;
         this.screenTime=st;
         this.movieName=mn;
         this.description=dc;
         this.img=img;
-        this.playTime=pt;
         this.releaseDate=rd;
+//        parties=new LinkedList<>();
     }
 
     public void setID(int ID) {
@@ -59,9 +59,6 @@ public class Movie {
         this.movieName = movieName;
     }
 
-    public void setPlayTime(LocalTime playTime) {
-        this.playTime = playTime;
-    }
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
@@ -73,10 +70,6 @@ public class Movie {
 
     public LocalDate getReleaseDate() {
         return releaseDate;
-    }
-
-    public LocalTime getPlayTime() {
-        return playTime;
     }
 
     public int getID() {

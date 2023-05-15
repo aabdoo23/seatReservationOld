@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Objects;
@@ -76,6 +77,8 @@ public class NewUserController implements Initializable {
         alert.setTitle("Success");
         alert.setContentText("User registered");
         alert.showAndWait();
+        Stage stage=(Stage) tfID.getScene().getWindow();
+        stage.close();
     }
     public void clickCB(ActionEvent e) {
         tfCHN.setEditable(cbCC.isSelected());

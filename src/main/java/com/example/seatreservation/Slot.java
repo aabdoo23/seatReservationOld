@@ -1,30 +1,23 @@
 package com.example.seatreservation;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Slot {
-    private int number;
     private LocalTime time;
-    private boolean filled;
-    Slot(int n,LocalTime t,boolean f){
-        this.number=n;
+    private LocalDate date;
+    Slot(LocalTime t,LocalDate date){
         this.time=t;
-        this.filled=f;
-    }
-    public void setNumber(int number) {
-        this.number = number;
+        this.date=date;
     }
 
-    public boolean isFilled() {
-        return filled;
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public void setFilled(boolean filled) {
-        this.filled = filled;
-    }
-
-    public int getNumber() {
-        return number;
+    public LocalDate getDate() {
+        return date;
     }
 
     public void setTime(LocalTime time) {
@@ -33,5 +26,10 @@ public class Slot {
 
     public LocalTime getTime() {
         return time;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(time)+" "+String.valueOf(date);
     }
 }

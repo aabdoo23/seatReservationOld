@@ -10,7 +10,7 @@ public class Hall {
     private int rows,columns;
     private String name;
     private SeatingClasses seatingClass1,seatingClass2,seatingClass3;
-    private final LinkedList<Slot> slots=new LinkedList<>();
+    private LinkedList<Slot> slots=new LinkedList<>();
 
     int[][] seats;
 
@@ -23,14 +23,7 @@ public class Hall {
         this.seatingClass2=sc2;
         this.seatingClass3=sc3;
         this.seats=new int[rows][columns];
-        slots.add(new Slot(0, LocalTime.of(10,30),false));
-        slots.add(new Slot(1, LocalTime.of(12,30),false));
-        slots.add(new Slot(2, LocalTime.of(14,30),false));
-        slots.add(new Slot(3, LocalTime.of(16,30),false));
-        slots.add(new Slot(4, LocalTime.of(18,30),false));
-        slots.add(new Slot(5, LocalTime.of(20,30),false));
-        slots.add(new Slot(6, LocalTime.of(22,30),false));
-        slots.add(new Slot(7, LocalTime.of(0,30),false));
+
     }
     public int getRows() {
         return rows;
@@ -40,9 +33,7 @@ public class Hall {
         return slots;
     }
 
-    public void bookSlot(int n){
-        slots.get(n).setFilled(true);
-    }
+
 
 
     public void setName(String name) {
@@ -106,10 +97,6 @@ public class Hall {
 
     @Override
     public String toString() {
-        return "Hall" +
-                "\n, ID=" + ID +
-                "\n, rows=" + rows +
-                "\n, columns=" + columns +
-                "\n, name=" + name ;
+        return name ;
     }
 }

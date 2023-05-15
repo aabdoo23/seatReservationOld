@@ -39,10 +39,10 @@ public class MainMenuController implements Initializable {
         int id=Integer.parseInt(tfID.getText());
         String pw=pfPW.getText();
         if(id==1&& Objects.equals(pw, "1")){
-            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newMovie.fxml")));
+            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("adminMain.fxml")));
             Scene scene=new Scene(root);
             Stage stage=new Stage();
-            stage.setTitle("new user");
+            stage.setTitle("Admin");
             stage.setScene(scene);
             stage.show();
             return;

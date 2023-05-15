@@ -3,14 +3,14 @@ package com.example.seatreservation;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.example.seatreservation.globals.spinnerTF;
 
-public class newHallController implements Initializable {
-
+public final class newHallController implements Initializable {
 
     public TextField tfID;
     public Spinner<Integer> rowsSpinner;
@@ -25,6 +25,7 @@ public class newHallController implements Initializable {
     public AnchorPane mainPanel;
     public Button saveButton;
     public TextField tfSeats;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,5 +108,8 @@ public class newHallController implements Initializable {
         alert.setTitle("Confirmed");
         alert.setContentText("Hall registered");
         alert.showAndWait();
+
+        Stage stage=(Stage) tfID.getScene().getWindow();
+        stage.close();
     }
 }

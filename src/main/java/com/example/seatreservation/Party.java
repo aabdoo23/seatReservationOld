@@ -4,18 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Party {
-    int ID;
-    LocalTime time;
-    LocalDate date;
-    Movie movie;
-    Hall hall;
+    private int ID;
+    private Slot slot;
+    private Movie movie;
+    private Hall hall;
     Party(){}
-    Party(int id,LocalDate dt,LocalTime t,Movie mv,Hall hl){
-        this.date=dt;
+    Party(int id,Slot slot,Movie mv,Hall hl){
+        this.slot=slot;
         this.hall=hl;
         this.ID=id;
         this.movie=mv;
-        this.time=t;
     }
 
     public void setMovie(Movie movie) {
@@ -30,12 +28,12 @@ public class Party {
         this.hall = hall;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public Slot getSlot() {
+        return slot;
     }
 
     public Movie getMovie() {
@@ -50,11 +48,15 @@ public class Party {
         return hall;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
-    public LocalTime getTime() {
-        return time;
+
+    @Override
+    public String toString() {
+        return "Party" +
+                "\n, ID=" + ID +
+                "\n, slot=" + slot +
+                "\n, movie=" + movie +
+                "\n, hall=" + hall +
+                '\n';
     }
 }
