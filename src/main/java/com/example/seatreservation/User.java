@@ -9,19 +9,10 @@ public class User {
     private String password;
     private String phoneNumber;
     private CreditCard card;
-    private LinkedList<Reservation>reservations=new LinkedList<>();
-    private LinkedList<Ticket>tickets=new LinkedList<>();
-
-    public LinkedList<Reservation> getReservations() {
-        return reservations;
-    }
+    private LinkedList<Ticket> tickets =new LinkedList<>();
 
     public LinkedList<Ticket> getTickets() {
         return tickets;
-    }
-
-    public void setReservations(LinkedList<Reservation> reservations) {
-        this.reservations = reservations;
     }
 
     public void setTickets(LinkedList<Ticket> tickets) {
@@ -30,14 +21,8 @@ public class User {
     public void addToTickets(Ticket ticket){
         tickets.add(ticket);
     }
-    public void addToReservations(Reservation ticket){
-        reservations.add(ticket);
-    }
     public void removeFromTickets(Ticket ticket) {
         tickets.remove(ticket);
-    }
-    public void removeFromReservations(Reservation ticket){
-        reservations.remove(ticket);
     }
 
     User(){}

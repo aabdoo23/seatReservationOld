@@ -8,19 +8,18 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class globals {
+    public static Movie movieForTicket;
     public static LinkedList<User>userLinkedList=new LinkedList<>();
-    public static LinkedList<Reservation>ticketsLinkedList=new LinkedList<>();
+    public static LinkedList<Ticket>ticketsLinkedList=new LinkedList<>();
     public static LinkedList<Movie>moviesLinkedList=new LinkedList<>();
     public static LinkedList<Party>partyLinkedList=new LinkedList<>();
 
     public static LinkedList<Hall>hallsLinkedList=new LinkedList<>();
 
     public static boolean[] usersIDs = new boolean[2000];
-    public static boolean[] reservationsIDs = new boolean[2000];
     public static boolean[] ticketsIDs = new boolean[2000];
     public static boolean[] hallsIDs = new boolean[2000];
     public static boolean[] partiesIDs = new boolean[2000];
-
     public static boolean[] moviesIDs = new boolean[2000];
 
     public static int createNewRandomID(boolean[] v) {

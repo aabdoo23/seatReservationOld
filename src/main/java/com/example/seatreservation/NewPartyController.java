@@ -84,7 +84,10 @@ public class NewPartyController implements Initializable {
         for (Movie movie1:globals.moviesLinkedList){
             if (Objects.equals(movie1.getMovieName(), moviesList.getSelectionModel().getSelectedItem())){
                 movie=movie1;
-                movieLabel.setText("Movie "+movie1.getMovieName()+" selected.");
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmed");
+                alert.setContentText("Movie "+movie1.getMovieName()+" selected.");
+                alert.showAndWait();
                 dpDate.setDayCellFactory(picker -> new DateCell() {
                     @Override
                     public void updateItem(LocalDate date, boolean empty) {
@@ -115,7 +118,6 @@ public class NewPartyController implements Initializable {
             party.setMovie(movie);
             movie.addToParties(party);
         }
-
 
         globals.partyLinkedList.add(party);
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);

@@ -43,10 +43,7 @@ public class UserMainController implements Initializable {
             }
         });
         posterCol.setCellValueFactory(new PropertyValueFactory<>("img"));
-
-
         nameCol.setCellValueFactory(new PropertyValueFactory<>("movieName"));
-
         tvMoviesTable.setItems(getMoviesList());
     }
     ObservableList<Movie> getMoviesList()
