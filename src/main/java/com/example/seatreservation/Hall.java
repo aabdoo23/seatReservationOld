@@ -21,7 +21,7 @@ public class Hall {
     public boolean isSlotBooked(LocalDateTime dateTime) {
         return slots.getOrDefault(dateTime, false);
     }
-    int[][] seats;
+    boolean[][] seats;
 
     Hall(int ID,String name,int rows,int columns,SeatingClasses sc1,SeatingClasses sc2,SeatingClasses sc3){
         this.ID=ID;
@@ -31,7 +31,7 @@ public class Hall {
         this.seatingClass1=sc1;
         this.seatingClass2=sc2;
         this.seatingClass3=sc3;
-        this.seats=new int[rows][columns];
+        this.seats=new boolean[rows][columns];
 
     }
     public int getRows() {
@@ -46,8 +46,9 @@ public class Hall {
         return name;
     }
 
-    public void setSeats(int[][] seats) {
-        this.seats = seats;
+
+    public void markSeat(int i,int j,boolean b){
+        seats[i][j]=b;
     }
 
     public void setID(int ID) {
@@ -84,8 +85,8 @@ public class Hall {
         this.seatingClass3 = seatingClass3;
     }
 
-    public int[][] getSeats() {
-        return seats;
+    public boolean getSeat(int i,int j){
+        return seats[i][j];
     }
 
 

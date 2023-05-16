@@ -48,31 +48,29 @@ public class MainMenuController implements Initializable {
             return;
         }
         else if(id==2&& Objects.equals(pw, "2")){
-            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("userMain.fxml")));
-            Scene scene=new Scene(root);
-            Stage stage=new Stage();
-            stage.setTitle("User");
-            stage.setScene(scene);
-            stage.show();
-            return;
+            globals.openNewForm("userMain.fxml","User");
         }
         for (User user:globals.userLinkedList){
             if (user.getID()==id){
                 if(Objects.equals(user.getPassword(), pw)){
-//
+                    globals.signedInUser=user;
+                    globals.openNewForm("userMain.fxml","User");
                 }
                 else{
                     Alert alert=new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("Invalid password");
                     alert.showAndWait();
-                    return;
                 }
+                return;
             }
         }
         tfID.setText("");
         pfPW.setText("");
     }
+
+
+
     public void open() throws IOException {
         Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newUserView.fxml")));
         Scene scene=new Scene(root);

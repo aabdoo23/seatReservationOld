@@ -2,12 +2,20 @@ package com.example.seatreservation;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Random;
 
 public class globals {
+
+    public static User signedInUser;
     public static Movie movieForTicket;
     public static LinkedList<User>userLinkedList=new LinkedList<>();
     public static LinkedList<Ticket>ticketsLinkedList=new LinkedList<>();
@@ -39,6 +47,16 @@ public class globals {
             }
         }
         return 0;
+    }
+
+
+    public static void openNewForm(String formName,String title) throws IOException {
+        Parent root= FXMLLoader.load(Objects.requireNonNull(globals.class.getResource(formName)));
+        Scene scene=new Scene(root);
+        Stage stage=new Stage();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
     }
     public static void spinnerTF(Spinner<Integer> spinner) {
         spinner.getEditor().setTextFormatter(new TextFormatter<>(change -> {

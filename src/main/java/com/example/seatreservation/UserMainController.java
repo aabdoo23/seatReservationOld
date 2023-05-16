@@ -3,7 +3,10 @@ package com.example.seatreservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -11,8 +14,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UserMainController implements Initializable {
@@ -24,6 +30,7 @@ public class UserMainController implements Initializable {
     @FXML
     public TableColumn<Movie, String> nameCol=new TableColumn<>();
     public Button bookButton;
+    ObservableList<Movie>movies= FXCollections.observableArrayList();
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         posterCol.setCellFactory(column -> new TableCell<>() {
@@ -48,8 +55,17 @@ public class UserMainController implements Initializable {
     }
     ObservableList<Movie> getMoviesList()
     {
-        ObservableList<Movie>movies= FXCollections.observableArrayList();
+        movies=FXCollections.observableArrayList();
         movies.addAll(globals.moviesLinkedList);
         return movies;
+    }
+    public void book() throws IOException {
+        globals.movieForTicket=movies.get(tvMoviesTable.getSelectionModel().getSelectedIndex());
+        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newTicket.fxml")));
+        Scene scene=new Scene(root);
+        Stage stage=new Stage();
+        stage.setTitle("New ticket");
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -22,6 +22,7 @@ public final class newHallController implements Initializable {
     public Spinner<Integer>tfSCP;
     public Spinner<Integer> TCNspinner;
     public Spinner<Integer> tfTCP;
+
     public AnchorPane mainPanel;
     public Button saveButton;
     public TextField tfSeats;
@@ -36,6 +37,9 @@ public final class newHallController implements Initializable {
         mainPanel.setMaxSize(mainPanel.getPrefHeight(),mainPanel.getPrefWidth());
         rowsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
         columnSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
+        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
+        FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
+        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
         tfSCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
         tfFCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
         tfTCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
@@ -52,48 +56,48 @@ public final class newHallController implements Initializable {
 
         initDisplay();
         rowsSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-           updateDisplay();
+           initDisplay();
         });
         columnSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateDisplay();
+            initDisplay();
         });
         FCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateDisplay();
+            initDisplay();
         });
         SCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateDisplay();
+            initDisplay();
         });
         TCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateDisplay();
+            initDisplay();
         });
     }
 
 
     public void initDisplay(){
-        FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
-        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
-        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
+//        FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
+//        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
+//        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, rowsSpinner.getValue()));
         tfSeats.setText(Integer.toString(rowsSpinner.getValue()*columnSpinner.getValue()));
     }
-    public void updateDisplay(){
-        int a=(rowsSpinner.getValue()-(SCNspinner.getValue()+ TCNspinner.getValue())),
-                b=(rowsSpinner.getValue()-(FCNspinner.getValue()+ TCNspinner.getValue())),
-                c=(rowsSpinner.getValue()-(FCNspinner.getValue()+ SCNspinner.getValue()));
-        System.out.println(a+" "+b+" "+c+"\n");
-        if (a>1){
-            System.out.println(a);
-            FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, a));
-        }
-        if (b>1){
-            System.out.println(b);
-            SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, b));
-        }
-        if (c>1){
-            System.out.println(c);
-            TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,c));
-        }
-        tfSeats.setText(Integer.toString(rowsSpinner.getValue()*columnSpinner.getValue()));
-    }
+//    public void updateDisplay(){
+//        int a=(rowsSpinner.getValue()-(SCNspinner.getValue()+ TCNspinner.getValue())),
+//                b=(rowsSpinner.getValue()-(FCNspinner.getValue()+ TCNspinner.getValue())),
+//                c=(rowsSpinner.getValue()-(FCNspinner.getValue()+ SCNspinner.getValue()));
+//        System.out.println(a+" "+b+" "+c+"\n");
+//        if (a>1){
+//            System.out.println(a);
+//            FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, a));
+//        }
+//        if (b>1){
+//            System.out.println(b);
+//            SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, b));
+//        }
+//        if (c>1){
+//            System.out.println(c);
+//            TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,c));
+//        }
+//        tfSeats.setText(Integer.toString(rowsSpinner.getValue()*columnSpinner.getValue()));
+//    }
     public void saveButtonC(){
         int id=Integer.parseInt(tfID.getText());
         int nr= rowsSpinner.getValue();

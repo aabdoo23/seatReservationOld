@@ -8,27 +8,32 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="mainPanel" prefHeight="573.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.seatreservation.NewTicketController">
+<AnchorPane fx:id="mainPanel" prefHeight="748.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.seatreservation.NewTicketController">
    <children>
       <Label layoutX="14.0" layoutY="18.0" text="Ticket ID:" />
       <TextField fx:id="tfID" layoutX="91.0" layoutY="14.0" />
-      <AnchorPane fx:id="moviePane" layoutX="442.0" layoutY="14.0" prefHeight="300.0" prefWidth="322.0">
+      <AnchorPane fx:id="moviePane" layoutX="49.0" layoutY="49.0" prefHeight="610.0" prefWidth="484.0">
          <children>
-            <Label fx:id="lbMovieName" layoutX="14.0" layoutY="14.0" text="movie name" />
-            <ImageView fx:id="ivPoster" fitHeight="171.0" fitWidth="200.0" layoutX="108.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <DatePicker fx:id="dpDate" layoutX="14.0" layoutY="219.0" />
-            <ChoiceBox fx:id="cbParties" layoutX="14.0" layoutY="248.0" prefWidth="150.0" />
-            <Label fx:id="lbScreenTime" layoutX="14.0" layoutY="32.0" text="screen time" />
-            <Button fx:id="selectBTN" layoutX="256.0" layoutY="261.0" mnemonicParsing="false" text="Select" />
-            <Label fx:id="lbPartySelected" layoutX="13.0" layoutY="277.0" text="Not selected" />
+            <Label fx:id="lbMovieName" layoutX="189.0" layoutY="9.0" text="movie name">
+               <font>
+                  <Font size="19.0" />
+               </font></Label>
+            <ImageView fx:id="ivPoster" fitHeight="253.0" fitWidth="198.0" layoutX="139.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+            <DatePicker fx:id="dpDate" layoutX="13.0" layoutY="305.0" />
+            <ChoiceBox fx:id="cbParties" layoutX="13.0" layoutY="342.0" prefWidth="150.0" />
+            <Label fx:id="lbScreenTime" layoutX="13.0" layoutY="287.0" text="screen time" />
+            <Button fx:id="selectBTN" layoutX="188.0" layoutY="342.0" mnemonicParsing="false" onAction="#chooseParty" text="Select" />
+            <Label fx:id="lbPartySelected" layoutX="15.0" layoutY="374.0" text="not selected" />
+            <StackPane fx:id="seatsPane" layoutX="15.0" layoutY="406.0" prefHeight="216.0" prefWidth="459.0" />
+            <Spinner fx:id="numberOfSeatsSpinner" layoutX="262.0" layoutY="311.0" />
+            <Label layoutX="262.0" layoutY="287.0" text="Number of seats" />
+            <Button fx:id="e" layoutX="193.0" layoutY="305.0" mnemonicParsing="false" onAction="#updateDisplay" text="e" />
          </children>
       </AnchorPane>
-      <FlowPane fx:id="seatsPane" layoutX="14.0" layoutY="48.0" prefHeight="391.0" prefWidth="402.0" />
-      <Spinner fx:id="numberOfSeatsSpinner" layoutX="16.0" layoutY="439.0" />
-      <Label fx:id="lbMoney" layoutX="17.0" layoutY="465.0" text="total money" />
-      <Button fx:id="confirmBTN" layoutX="705.0" layoutY="533.0" mnemonicParsing="false" text="Confirm" />
+      <Label fx:id="lbMoney" layoutX="256.0" layoutY="681.0" text="total money" />
+      <Button fx:id="confirmBTN" layoutX="261.0" layoutY="708.0" mnemonicParsing="false" text="Confirm" />
    </children>
 </AnchorPane>
