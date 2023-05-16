@@ -25,9 +25,10 @@
             <ListView fx:id="moviesList" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
-      <ChoiceBox fx:id="cbHalls" layoutX="212.0" layoutY="10.0" prefHeight="26.0" prefWidth="142.0" />
+      <ChoiceBox fx:id="cbHalls" layoutX="206.0" layoutY="10.0" prefHeight="26.0" prefWidth="142.0" />
       <Label layoutX="175.0" layoutY="14.0" text="Hall:" />
       <Button fx:id="saveBTN" layoutX="273.0" layoutY="412.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="82.0" text="Save" />
       <Button fx:id="selectBTN" layoutX="273.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectMovie" prefHeight="26.0" prefWidth="82.0" text="Select" />
+      <Label fx:id="movieLabel" layoutX="14.0" layoutY="336.0" />
    </children>
 </AnchorPane>

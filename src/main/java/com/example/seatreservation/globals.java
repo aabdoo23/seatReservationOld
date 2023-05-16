@@ -35,6 +35,7 @@ public class globals {
     public static int createNewSeqID(boolean[] v) {
         for (int i=1;i<v.length;i++){
             if(!v[i]){
+                v[i]=true;
                 return i;
             }
         }

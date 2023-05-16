@@ -47,6 +47,15 @@ public class MainMenuController implements Initializable {
             stage.show();
             return;
         }
+        else if(id==2&& Objects.equals(pw, "2")){
+            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("userMain.fxml")));
+            Scene scene=new Scene(root);
+            Stage stage=new Stage();
+            stage.setTitle("User");
+            stage.setScene(scene);
+            stage.show();
+            return;
+        }
         for (User user:globals.userLinkedList){
             if (user.getID()==id){
                 if(Objects.equals(user.getPassword(), pw)){

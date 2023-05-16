@@ -10,11 +10,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class NewPartyController implements Initializable {
 
@@ -27,9 +25,8 @@ public class NewPartyController implements Initializable {
     public ChoiceBox<String> cbHalls;
     public Button saveBTN;
     public Button selectBTN;
+    public Label movieLabel;
     int id;
-    LocalTime lt=LocalTime.of(10,30);
-    String[] strings={"10:30", "12:30", "14:30", "16:30", "18:30", "20:30","22:30","00:30"};
     LocalTime[] localTimes={
             LocalTime.of(10,30),
             LocalTime.of(12,30),
@@ -40,8 +37,25 @@ public class NewPartyController implements Initializable {
             LocalTime.of(22,30),
             LocalTime.of(0,30),
     };
-    LinkedList<Slot>slotLinkedList=new LinkedList<>();
-
+    LinkedList<LocalDateTime> slots=new LinkedList<>();
+    void updateDisplay(){
+        Hall hall=globals.hallsLinkedList.get(cbHalls.getSelectionModel().getSelectedIndex());
+        System.out.println(hall.toString());
+        LocalDate date=dpDate.getValue();
+        slots=new LinkedList<>();
+        System.out.println(date.toString());
+        for (LocalTime localTime:localTimes){
+            LocalDateTime ltd=LocalDateTime.of(date,localTime);
+            slots.add(ltd);
+        }
+        for (LocalTime lt:localTimes){
+            LocalDateTime ltd= LocalDateTime.of(date,lt);
+            if (hall.isSlotBooked(ltd)){
+                slots.remove(ltd);
+            }
+        }
+        globals.makeList(slots,cbSlot);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,48 +71,27 @@ public class NewPartyController implements Initializable {
 
         globals.makeList(globals.hallsLinkedList,cbHalls);
         cbHalls.getSelectionModel().selectFirst();
-
+        cbSlot.getSelectionModel().selectFirst();
+        updateDisplay();
         cbHalls.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            Hall hall=globals.hallsLinkedList.get(cbHalls.getSelectionModel().getSelectedIndex());
-            System.out.println(hall.toString());
-            LocalDate date=dpDate.getValue();
-            slotLinkedList=new LinkedList<>();
-            System.out.println(date.toString());
-            for (LocalTime localTime:localTimes){
-                Slot s=new Slot(localTime,date);
-                slotLinkedList.add(s);
-                System.out.println(s.toString());
-            }
-            for (LocalTime lt:localTimes){
-                Slot slot1=new Slot(lt,date);
-                for (Slot slot:hall.getSlots()){
-                    if (slot==slot1){
-                        slotLinkedList.remove(slot);
-                        System.out.println(slot.toString());
-                    }
-                }
-            }
-            globals.makeList(slotLinkedList,cbSlot);
+            updateDisplay();
         });
 
     }
     Movie movie=null;
     public void selectMovie(){
+        updateDisplay();
         for (Movie movie1:globals.moviesLinkedList){
             if (Objects.equals(movie1.getMovieName(), moviesList.getSelectionModel().getSelectedItem())){
                 movie=movie1;
-                Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmed");
-                alert.setContentText("Movie "+movie1.getMovieName()+" selected.");
-                alert.showAndWait();
+                movieLabel.setText("Movie "+movie1.getMovieName()+" selected.");
                 dpDate.setDayCellFactory(picker -> new DateCell() {
                     @Override
                     public void updateItem(LocalDate date, boolean empty) {
                         super.updateItem(date, empty);
                         if (date.isBefore(movie.getReleaseDate())) {
                             setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;"); // set disabled date style
+                            setStyle("-fx-background-color: #ffc0cb;");
                         }
                     }
                 });
@@ -113,12 +106,17 @@ public class NewPartyController implements Initializable {
     public void save(){
         Party party=new Party();
         party.setID(id);
-        party.setSlot(slotLinkedList.get(cbSlot.getSelectionModel().getSelectedIndex()));
-        party.setHall(globals.hallsLinkedList.get(cbHalls.getSelectionModel().getSelectedIndex()));
+        Slot slot=new Slot(slots.get(cbSlot.getSelectionModel().getSelectedIndex()));
+        party.setSlot(slot);
+        Hall hall=globals.hallsLinkedList.get(cbHalls.getSelectionModel().getSelectedIndex());
+        party.setHall(hall);
+        hall.markSlotAsBooked(slot.getLtd());
         if(movie!=null){
             party.setMovie(movie);
             movie.addToParties(party);
         }
+
+
         globals.partyLinkedList.add(party);
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Success");

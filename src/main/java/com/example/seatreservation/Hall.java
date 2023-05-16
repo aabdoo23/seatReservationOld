@@ -1,17 +1,26 @@
 package com.example.seatreservation;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
 
 public class Hall {
     private int ID;
     private int rows,columns;
     private String name;
     private SeatingClasses seatingClass1,seatingClass2,seatingClass3;
-    private LinkedList<Slot> slots=new LinkedList<>();
+    private Map<LocalDateTime, Boolean> slots=new HashMap<>();
+    public void markSlotAsBooked(LocalDateTime dateTime) {
+        slots.put(dateTime, true);
+    }
 
+    public void markSlotAsAvailable(LocalDateTime dateTime) {
+        slots.put(dateTime, false);
+    }
+
+    public boolean isSlotBooked(LocalDateTime dateTime) {
+        return slots.getOrDefault(dateTime, false);
+    }
     int[][] seats;
 
     Hall(int ID,String name,int rows,int columns,SeatingClasses sc1,SeatingClasses sc2,SeatingClasses sc3){
@@ -28,13 +37,6 @@ public class Hall {
     public int getRows() {
         return rows;
     }
-
-    public LinkedList<Slot> getSlots() {
-        return slots;
-    }
-
-
-
 
     public void setName(String name) {
         this.name = name;

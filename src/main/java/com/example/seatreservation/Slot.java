@@ -1,35 +1,25 @@
 package com.example.seatreservation;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Slot {
-    private LocalTime time;
-    private LocalDate date;
-    Slot(LocalTime t,LocalDate date){
-        this.time=t;
-        this.date=date;
+    private LocalDateTime ltd;
+    Slot(LocalDateTime ltd){
+        this.ltd=ltd;
     }
 
-
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setLtd(LocalDateTime ltd) {
+        this.ltd = ltd;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
-    public LocalTime getTime() {
-        return time;
+    public LocalDateTime getLtd() {
+        return ltd;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(time)+" "+String.valueOf(date);
+        return ltd.toLocalDate().toString()+" "+ltd.toLocalTime().toString();
     }
 }
