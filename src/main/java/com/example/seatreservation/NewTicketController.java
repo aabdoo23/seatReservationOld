@@ -69,6 +69,7 @@ public class NewTicketController implements Initializable {
         x[0]=selectedParty.getHall().getSeatingClass1().numberOfRows;
         x[1]=selectedParty.getHall().getSeatingClass2().numberOfRows;
         x[2]=selectedParty.getHall().getSeatingClass3().numberOfRows;
+        seatsPane.getChildren().clear();
 //        seatsPane=new VBox();
 //        seatsPane.setStyle("layoutX:486.0 ; layoutY:40.0; prefHeight:554.0; prefWidth:459.0");
 //        mainPanel.getChildren().add(seatsPane);
@@ -86,9 +87,9 @@ public class NewTicketController implements Initializable {
                     int finalI = i;
                     int finalJ = j;
                     button.setOnAction(e-> {
-                        if (Objects.equals(button.getStyle(), "-fx-background-color: #ff0000;")){
-                            button.setStyle("-fx-background-color: #11ff00;");
-                            selectSeat(finalI, finalJ,true);
+                        if (Objects.equals(button.getStyle(), "-fx-background-color: #ff0000;")||button.getStyle().isEmpty()){
+                            if(selectSeat(finalI, finalJ,true))
+                                button.setStyle("-fx-background-color: #11ff00;");
                         }
                         else{
                             button.setStyle("-fx-background-color: #ff0000;");
@@ -103,20 +104,18 @@ public class NewTicketController implements Initializable {
         }
     }
     int seatCounter=0;
-    public void selectSeat(int i, int j, boolean f) {
+    public boolean selectSeat(int i, int j, boolean f) {
         if(seatCounter>= numberOfSeatsSpinner.getValue()) {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Error: You have already chosen "+numberOfSeatsSpinner.getValue()+" seats");
-            alert.showAndWait();
-            return;
+
+            globals.showErrorAlert("Error: You have already chosen "+numberOfSeatsSpinner.getValue()+" seats");
+            return false;
         }
         if(f) {
             seatCounter++;
         }
-        else seatCounter--;
+        else if (seatCounter>0) seatCounter--;
         selectedParty.getHall().markSeat(i,j,f);
-
+        return true;
     }
     public void updateDisplay(){
         if(selectedParty!=null) {
@@ -141,19 +140,21 @@ public class NewTicketController implements Initializable {
             globals.makeList(parties,cbParties);
         }
         else{
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("No available parties for this date.");
-            alert.showAndWait();
+
+            globals.showErrorAlert("No available parties for this date.");
         }
     }
     public void chooseParty(){
+        if(cbParties.getSelectionModel().getSelectedIndex()==-1||cbParties.getSelectionModel().isEmpty()) {
+
+            globals.showErrorAlert("Selection invalid");
+            return;
+        }
         selectedParty=parties.get(cbParties.getSelectionModel().getSelectedIndex());
         updateSeats();
         updateDisplay();
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Party selected");
-        alert.setContentText("Party selected");
-        alert.showAndWait();
+
+        globals.showConfirmationAlert("Party selected");
     }
+
 }
