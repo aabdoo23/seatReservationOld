@@ -3,9 +3,12 @@ package com.example.seatreservation;
 public class Seat {
     private int ID;
     private boolean booked;
+    int x,y;
     private SeatingClasses seatingClass;
-    Seat(){}
-    Seat(int id,boolean booked,SeatingClasses classes){
+    Seat(int x,int y){this.x=x;this.y=y;}
+    Seat(int id,int i,int j,boolean booked,SeatingClasses classes){
+        this.x=i;
+        this.y=j;
         this.ID=id;
         this.booked=booked;
         this.seatingClass=classes;
@@ -13,6 +16,19 @@ public class Seat {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public void setXY(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void setBooked(boolean booked) {
@@ -33,5 +49,10 @@ public class Seat {
 
     public boolean isBooked() {
         return booked;
+    }
+
+    @Override
+    public String toString() {
+        return  ID+"";
     }
 }

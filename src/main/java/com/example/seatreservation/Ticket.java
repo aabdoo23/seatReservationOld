@@ -1,6 +1,7 @@
 package com.example.seatreservation;
 
 import java.time.LocalTime;
+import java.util.LinkedList;
 
 public class Ticket {
     private int ID;
@@ -8,6 +9,7 @@ public class Ticket {
     private double price;
     private User user;
     private Party party;
+    private LinkedList<Seat>seats;
 
     public Ticket(int reservationID, double price, User user, Party party) {
         this.ID= reservationID;
@@ -15,11 +17,24 @@ public class Ticket {
         this.price=price;
         this.user = user;
         this.party=party;
+        seats = new LinkedList<>();
+    }
+
+    public void setSeats(LinkedList<Seat> seats) {
+        this.seats = seats;
+    }
+    public void addToSeats(Seat seat) {
+        this.seats .add(seat);
+    }
+
+    public LinkedList<Seat> getSeats() {
+        return seats;
     }
 
 
     public Ticket() {
-
+        seats = new LinkedList<>();
+        this.setIssueTime(LocalTime.now());
     }
 
     public void setIssueTime(LocalTime issueTime) {

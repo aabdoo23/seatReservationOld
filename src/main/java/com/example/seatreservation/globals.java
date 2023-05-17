@@ -17,6 +17,7 @@ public class globals {
 
     public static User signedInUser;
     public static Movie movieForTicket;
+    public static Ticket currentTKT=new Ticket();
     public static LinkedList<User>userLinkedList=new LinkedList<>();
     public static LinkedList<Ticket>ticketsLinkedList=new LinkedList<>();
     public static LinkedList<Movie>moviesLinkedList=new LinkedList<>();

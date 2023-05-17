@@ -46,7 +46,7 @@ public class MainMenuController implements Initializable {
                 else{
                     globals.showErrorAlert("Invalid password");
                 }
-                return;
+                break;
             }
         }
         tfID.setText("");

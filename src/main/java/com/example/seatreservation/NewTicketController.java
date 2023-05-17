@@ -6,11 +6,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class NewTicketController implements Initializable {
@@ -22,9 +24,7 @@ public class NewTicketController implements Initializable {
     public ImageView ivPoster;
     public DatePicker dpDate;
     public ChoiceBox<String> cbParties;
-    public Label lbScreenTime;
     public Button selectBTN;
-    public Label lbPartySelected;
     public VBox seatsPane;
     public Spinner<Integer> numberOfSeatsSpinner;
     public Label lbMoney;
@@ -48,8 +48,11 @@ public class NewTicketController implements Initializable {
         tfID.setText(Integer.toString(id));
         lbMovieName.setText(movie.getMovieName());
         ivPoster.setImage(movie.getImg());
-        lbScreenTime.setText(Integer.toString(movie.getScreenTime()));
         dpDate.setValue(LocalDate.now());
+        updateDisplay();
+        dpDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            updateDisplay();
+        });
         dpDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -62,13 +65,16 @@ public class NewTicketController implements Initializable {
         });
 
     }
-    public void updateSeats(){
+    public void updateSeats(){ //selectBTN
 
         if(selectedParty==null)return;
         int[] x=new int[3];
         x[0]=selectedParty.getHall().getSeatingClass1().getNumberOfRows();
         x[1]=selectedParty.getHall().getSeatingClass2().getNumberOfRows();
         x[2]=selectedParty.getHall().getSeatingClass3().getNumberOfRows();
+        int[] y=new int[3];
+        y[1]=x[0];
+        y[2]=x[1]+x[0];
         seatsPane.getChildren().clear();
 
         for (int k=0;k<3;k++){
@@ -78,19 +84,19 @@ public class NewTicketController implements Initializable {
                 HBox rowBox = new HBox();
                 rowBox.setSpacing(5);
                 for (int j=0;j<selectedParty.getHall().getColumns();j++){
+                    int finalI = i+y[k];
+                    int finalJ = j;
                     Button button=new Button();
                     button.setText(Integer.toString(j+1));
-                    button.setDisable(selectedParty.getHall().getSeat(i,j).isBooked());
-                    if(selectedParty.getHall().getSeat(i,j).isBooked())button.setStyle("-fx-background-color: #11ff00;");
-                    int finalI = i;
-                    int finalJ = j;
+                    button.setDisable(selectedParty.getHall().getSeat(finalI,finalJ).isBooked());
+                    if(selectedParty.getHall().getSeat(finalI,finalJ).isBooked())button.setStyle("-fx-background-color: #11ff00;");
                     button.setOnAction(e-> {
-                        if (Objects.equals(button.getStyle(), "-fx-background-color: #ff0000;")||button.getStyle().isEmpty()){
+                        if (button.getStyle().isEmpty()){
                             if(selectSeat(finalI, finalJ,true))
                                 button.setStyle("-fx-background-color: #11ff00;");
                         }
                         else{
-                            button.setStyle("-fx-background-color: #ff0000;");
+                            button.setStyle("");
                             selectSeat(finalI, finalJ,false);
                         }
                     });
@@ -102,28 +108,34 @@ public class NewTicketController implements Initializable {
         }
     }
     int seatCounter=0;
-    public boolean selectSeat(int i, int j, boolean f) {
-        if(seatCounter>= numberOfSeatsSpinner.getValue()) {
-
+    LinkedList<Seat>pickedSeats=new LinkedList<>();
+    public boolean selectSeat(int i, int j, boolean f) { //seat function
+        if(seatCounter>= numberOfSeatsSpinner.getValue()&&f) {
             globals.showErrorAlert("Error: You have already chosen "+numberOfSeatsSpinner.getValue()+" seats");
             return false;
         }
         if(f) {
             seatCounter++;
             lbMoney.setText(Integer.toString(Integer.parseInt(lbMoney.getText())+selectedParty.getHall().getSeat(i,j).getSeatingClass().getSeatPricing()));
-
-
         }
-        else if (seatCounter>0) {
+        else {
             seatCounter--;
             lbMoney.setText(Integer.toString(Integer.parseInt(lbMoney.getText())-selectedParty.getHall().getSeat(i,j).getSeatingClass().getSeatPricing()));
 
         }
-        selectedParty.getHall().markSeat(i,j,f);
+        Seat seat=(selectedParty.getHall().getSeat(i,j));
+        seat.setBooked(f);
+        for (Seat seat1:pickedSeats){//check if seat there
+            if(seat1.getID()==seat.getID()){
+                seat1.setBooked(f);
+                return true;
+            }
+        }
+        pickedSeats.add(seat);
         return true;
     }
-    public void updateDisplay(){
-        if(selectedParty!=null) {
+    public void updateDisplay(){ //selectBTN //dp
+        if(selectedParty!=null) { //calculate number of tickets to choose from
             int cnt=0;
             for (int i = 0; i < selectedParty.getHall().getRows(); i++) {
                 for (int j = 0; j < selectedParty.getHall().getColumns(); j++) {
@@ -133,7 +145,7 @@ public class NewTicketController implements Initializable {
             numberOfSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, cnt));
         }
 
-        parties=new LinkedList<>();
+        parties=new LinkedList<>(); // build content of cbParties
         LocalDate date=dpDate.getValue();
         for (Party party:movie.getParties()){
             System.out.println(party.getSlot().getLtd().toLocalDate().toString()+" "+date);
@@ -143,13 +155,15 @@ public class NewTicketController implements Initializable {
         }
         if(parties.size()!=0){
             globals.makeList(parties,cbParties);
+            cbParties.getSelectionModel().selectFirst();
         }
         else{
-
             globals.showErrorAlert("No available parties for this date.");
         }
     }
-    public void chooseParty(){
+    public void chooseParty(){ //selectBTN
+        seatCounter=0;
+        pickedSeats=new LinkedList<>();
         if(cbParties.getSelectionModel().getSelectedIndex()==-1||cbParties.getSelectionModel().isEmpty()) {
 
             globals.showErrorAlert("Selection invalid");
@@ -159,11 +173,23 @@ public class NewTicketController implements Initializable {
         updateSeats();
         updateDisplay();
         lbMoney.setText(Integer.toString(0));
-        globals.showConfirmationAlert("Party selected");
     }
 
-    public void save(){
-
+    public void save() throws IOException {//confirmBTN
+        for (Seat seat:pickedSeats){
+            selectedParty.getHall().markSeat(seat.getX(),seat.getY(),seat.isBooked());
+        }
+        Ticket ticket=new Ticket();
+        ticket.setID(globals.createNewRandomID(globals.ticketsIDs));
+        ticket.setSeats(pickedSeats);
+        ticket.setParty(selectedParty);
+        ticket.setUser(globals.signedInUser);
+        ticket.setPrice(Integer.parseInt(lbMoney.getText()));
+        ticket.setIssueTime(LocalTime.now());
+        globals.currentTKT=ticket;
+        globals.openNewForm("checkoutTicket.fxml","Payment");
+        Stage s=(Stage)tfID.getParent().getScene().getWindow();
+        s.close();
     }
 
 }

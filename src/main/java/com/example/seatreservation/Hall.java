@@ -34,7 +34,8 @@ public class Hall {
         this.seats=new Seat[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j]=new Seat();
+                seats[i][j]=new Seat(i,j);
+
                 seats[i][j].setID(globals.createNewSeqID(seatsIDs));
             }
         }
@@ -45,11 +46,11 @@ public class Hall {
         }
         for (int i = 0; i < seatingClass2.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j].setSeatingClass(seatingClass2);
+                seats[i+ seatingClass1.getNumberOfRows()][j].setSeatingClass(seatingClass2);
             }
         }for (int i = 0; i < seatingClass3.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j].setSeatingClass(seatingClass3);
+                seats[i+ seatingClass1.getNumberOfRows()+ seatingClass2.getNumberOfRows()][j].setSeatingClass(seatingClass3);
             }
         }
 

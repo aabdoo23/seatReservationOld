@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="mainPanel" prefHeight="522.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.seatreservation.CheckoutTicketController">
+   <children>
+      <Label layoutX="14.0" layoutY="52.0" text="Issue time:" />
+      <TextField fx:id="tfIssueTime" disable="true" editable="false" layoutX="79.0" layoutY="48.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="14.0" layoutY="18.0" text="Ticket ID:" />
+      <TextField fx:id="tfID" disable="true" editable="false" layoutX="68.0" layoutY="14.0" prefHeight="26.0" prefWidth="141.0" />
+      <Label layoutX="14.0" layoutY="88.0" text="Name:" />
+      <TextField fx:id="tfName" disable="true" editable="false" layoutX="57.0" layoutY="84.0" prefHeight="26.0" prefWidth="152.0" />
+      <ImageView fx:id="ivPoster" fitHeight="207.0" fitWidth="176.0" layoutX="217.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="217.0" layoutY="19.0" text="Movie name:" />
+      <TextField fx:id="tfMovieName" disable="true" editable="false" layoutX="217.0" layoutY="48.0" prefHeight="26.0" prefWidth="176.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="14.0" layoutY="124.0" text="Hall:" />
+      <TextField fx:id="tfHallName" disable="true" editable="false" layoutX="42.0" layoutY="119.0" prefHeight="26.0" prefWidth="167.0" />
+      <Label layoutX="14.0" layoutY="159.0" text="Date and Time:" />
+      <TextField fx:id="tfDateTime" disable="true" editable="false" layoutX="99.0" layoutY="155.0" prefHeight="26.0" prefWidth="110.0" />
+      <Button fx:id="printTKTBTN" layoutX="243.0" layoutY="481.0" mnemonicParsing="false" onAction="#printTKT" text="Print ticket" />
+      <RadioButton fx:id="rbCash" layoutX="12.0" layoutY="291.0" mnemonicParsing="false" text="Cash" />
+      <RadioButton fx:id="rbCC" layoutX="12.0" layoutY="316.0" mnemonicParsing="false" text="Credit card" />
+      <Label layoutX="10.0" layoutY="266.0" text="Choose payment method:" />
+      <AnchorPane fx:id="apCC" layoutY="344.0" prefHeight="128.0" prefWidth="407.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Card number:" />
+            <TextField fx:id="tfCN" layoutX="93.0" layoutY="9.0" prefHeight="26.0" prefWidth="300.0" />
+            <Label layoutX="14.0" layoutY="48.0" text="Expires on:" />
+            <DatePicker fx:id="dpExpDate" layoutX="80.0" layoutY="43.0" prefHeight="26.0" prefWidth="152.0" />
+            <Label layoutX="11.0" layoutY="81.0" text="Card holder name:" />
+            <TextField fx:id="tfCHN" layoutX="117.0" layoutY="76.0" prefHeight="26.0" prefWidth="276.0" />
+            <Label layoutX="306.0" layoutY="47.0" text="CVV:" />
+            <PasswordField fx:id="pfCvv" layoutX="339.0" layoutY="43.0" prefHeight="26.0" prefWidth="53.0" />
+            <CheckBox fx:id="cbUseCC" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" text="Use your Credit card" />
+            <CheckBox fx:id="cbRegisterAsCC" layoutX="160.0" layoutY="110.0" mnemonicParsing="false" text="Register as your credit card" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="saveBTN" layoutX="327.0" layoutY="481.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="73.0" text="Save" />
+      <Label layoutX="14.0" layoutY="195.0" text="Booked seats:" />
+      <TextField fx:id="tfSeatsBooked" disable="true" editable="false" layoutX="99.0" layoutY="191.0" prefHeight="26.0" prefWidth="110.0" />
+      <Label layoutX="14.0" layoutY="231.0" text="Total price:" />
+      <TextField fx:id="tfPrice" disable="true" editable="false" layoutX="79.0" layoutY="227.0" prefHeight="26.0" prefWidth="130.0" />
+   </children>
+</AnchorPane>
