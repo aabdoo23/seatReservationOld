@@ -39,7 +39,7 @@ public class NewTicketController implements Initializable {
             int cnt=0;
             for (int i = 0; i < selectedParty.getHall().getRows(); i++) {
                 for (int j = 0; j < selectedParty.getHall().getColumns(); j++) {
-                    if (!selectedParty.getHall().getSeat(i, j)) cnt++;
+                    if (!selectedParty.getHall().getSeat(i, j).isBooked()) cnt++;
                 }
             }
             numberOfSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, cnt));
@@ -66,13 +66,11 @@ public class NewTicketController implements Initializable {
 
         if(selectedParty==null)return;
         int[] x=new int[3];
-        x[0]=selectedParty.getHall().getSeatingClass1().numberOfRows;
-        x[1]=selectedParty.getHall().getSeatingClass2().numberOfRows;
-        x[2]=selectedParty.getHall().getSeatingClass3().numberOfRows;
+        x[0]=selectedParty.getHall().getSeatingClass1().getNumberOfRows();
+        x[1]=selectedParty.getHall().getSeatingClass2().getNumberOfRows();
+        x[2]=selectedParty.getHall().getSeatingClass3().getNumberOfRows();
         seatsPane.getChildren().clear();
-//        seatsPane=new VBox();
-//        seatsPane.setStyle("layoutX:486.0 ; layoutY:40.0; prefHeight:554.0; prefWidth:459.0");
-//        mainPanel.getChildren().add(seatsPane);
+
         for (int k=0;k<3;k++){
             int z=k+1;
             seatsPane.getChildren().add(new Label("Seating class: "+(z)));
@@ -82,8 +80,8 @@ public class NewTicketController implements Initializable {
                 for (int j=0;j<selectedParty.getHall().getColumns();j++){
                     Button button=new Button();
                     button.setText(Integer.toString(j+1));
-                    button.setDisable(selectedParty.getHall().getSeat(i,j));
-                    if(selectedParty.getHall().getSeat(i,j))button.setStyle("-fx-background-color: #11ff00;");
+                    button.setDisable(selectedParty.getHall().getSeat(i,j).isBooked());
+                    if(selectedParty.getHall().getSeat(i,j).isBooked())button.setStyle("-fx-background-color: #11ff00;");
                     int finalI = i;
                     int finalJ = j;
                     button.setOnAction(e-> {
@@ -112,8 +110,15 @@ public class NewTicketController implements Initializable {
         }
         if(f) {
             seatCounter++;
+            lbMoney.setText(Integer.toString(Integer.parseInt(lbMoney.getText())+selectedParty.getHall().getSeat(i,j).getSeatingClass().getSeatPricing()));
+
+
         }
-        else if (seatCounter>0) seatCounter--;
+        else if (seatCounter>0) {
+            seatCounter--;
+            lbMoney.setText(Integer.toString(Integer.parseInt(lbMoney.getText())-selectedParty.getHall().getSeat(i,j).getSeatingClass().getSeatPricing()));
+
+        }
         selectedParty.getHall().markSeat(i,j,f);
         return true;
     }
@@ -122,7 +127,7 @@ public class NewTicketController implements Initializable {
             int cnt=0;
             for (int i = 0; i < selectedParty.getHall().getRows(); i++) {
                 for (int j = 0; j < selectedParty.getHall().getColumns(); j++) {
-                    if (!selectedParty.getHall().getSeat(i, j)) cnt++;
+                    if (!selectedParty.getHall().getSeat(i, j).isBooked()) cnt++;
                 }
             }
             numberOfSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, cnt));
@@ -153,8 +158,12 @@ public class NewTicketController implements Initializable {
         selectedParty=parties.get(cbParties.getSelectionModel().getSelectedIndex());
         updateSeats();
         updateDisplay();
-
+        lbMoney.setText(Integer.toString(0));
         globals.showConfirmationAlert("Party selected");
+    }
+
+    public void save(){
+
     }
 
 }

@@ -46,25 +46,21 @@ public class NewUserController implements Initializable {
         String pn = tfPN.getText();
         String pw = pfPW1.getText();
         if (tfEmail.getText().isEmpty() || tfName.getText().isEmpty() || tfPN.getText().isEmpty() || pw.isEmpty()) {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Error: Please fill all information");
-            alert.showAndWait();
+
+            globals.showErrorAlert("Error: Please fill all information");
             return;
         }
         if (!Objects.equals(pfPW1.getText(), pfPW2.getText())) {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Error: Passwords don't match");
-            alert.showAndWait();
+
+            globals.showErrorAlert("Error: Passwords don't match");
+
             return;
         }
         if(cbCC.isSelected()){
             if (tfCN.getText().isEmpty() ||tfCN.getText().length()!=16|| tfCHN.getText().isEmpty() || pfCvv.getText().isEmpty()) {
-                Alert alert=new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setContentText("Error: Please fill all card information and check your info");
-                alert.showAndWait();
+
+                globals.showErrorAlert("Error: Please fill all card information and check your info");
+
                 return;
             }
         }
@@ -73,10 +69,7 @@ public class NewUserController implements Initializable {
             user.setCard(new CreditCard(tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
         }
         globals.userLinkedList.add(user);
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Success");
-        alert.setContentText("User registered");
-        alert.showAndWait();
+        globals.showConfirmationAlert("User registered");
         Stage stage=(Stage) tfID.getScene().getWindow();
         stage.close();
     }

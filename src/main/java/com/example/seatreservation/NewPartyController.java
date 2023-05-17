@@ -1,9 +1,7 @@
 package com.example.seatreservation;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -84,10 +82,7 @@ public class NewPartyController implements Initializable {
         for (Movie movie1:globals.moviesLinkedList){
             if (Objects.equals(movie1.getMovieName(), moviesList.getSelectionModel().getSelectedItem())){
                 movie=movie1;
-                Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmed");
-                alert.setContentText("Movie "+movie1.getMovieName()+" selected.");
-                alert.showAndWait();
+                globals.showConfirmationAlert("Movie "+movie1.getMovieName()+" selected.");
                 dpDate.setDayCellFactory(picker -> new DateCell() {
                     @Override
                     public void updateItem(LocalDate date, boolean empty) {
@@ -101,10 +96,7 @@ public class NewPartyController implements Initializable {
                 return;
             }
         }
-        Alert alert=new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Invalid selection");
-        alert.showAndWait();
+        globals.showErrorAlert("Invalid selection");
     }
     public void save(){
         Party party=new Party();
@@ -120,10 +112,8 @@ public class NewPartyController implements Initializable {
         }
 
         globals.partyLinkedList.add(party);
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Success");
-        alert.setContentText("Party registered");
-        alert.showAndWait();
+
+        globals.showConfirmationAlert("Party registered");
         Stage stage=(Stage) tfID.getScene().getWindow();
         stage.close();
     }

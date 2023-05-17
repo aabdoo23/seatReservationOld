@@ -2,9 +2,7 @@ package com.example.seatreservation;
 
 import javafx.scene.image.Image;
 
-import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.LinkedList;
 
 public class Movie {

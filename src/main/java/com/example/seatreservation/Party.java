@@ -1,8 +1,5 @@
 package com.example.seatreservation;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class Party {
     private int ID;
     private Slot slot;

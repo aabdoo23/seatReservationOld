@@ -1,7 +1,6 @@
 package com.example.seatreservation;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 
 public class Hall {
@@ -21,7 +20,7 @@ public class Hall {
     public boolean isSlotBooked(LocalDateTime dateTime) {
         return slots.getOrDefault(dateTime, false);
     }
-    boolean[][] seats;
+    Seat[][] seats;
 
     Hall(int ID,String name,int rows,int columns,SeatingClasses sc1,SeatingClasses sc2,SeatingClasses sc3){
         this.ID=ID;
@@ -31,7 +30,28 @@ public class Hall {
         this.seatingClass1=sc1;
         this.seatingClass2=sc2;
         this.seatingClass3=sc3;
-        this.seats=new boolean[rows][columns];
+        boolean[] seatsIDs=new boolean[rows*columns];
+        this.seats=new Seat[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                seats[i][j]=new Seat();
+                seats[i][j].setID(globals.createNewSeqID(seatsIDs));
+            }
+        }
+        for (int i = 0; i < seatingClass1.getNumberOfRows(); i++) {
+            for (int j = 0; j < columns; j++) {
+                seats[i][j].setSeatingClass(seatingClass1);
+            }
+        }
+        for (int i = 0; i < seatingClass2.getNumberOfRows(); i++) {
+            for (int j = 0; j < columns; j++) {
+                seats[i][j].setSeatingClass(seatingClass2);
+            }
+        }for (int i = 0; i < seatingClass3.getNumberOfRows(); i++) {
+            for (int j = 0; j < columns; j++) {
+                seats[i][j].setSeatingClass(seatingClass3);
+            }
+        }
 
     }
     public int getRows() {
@@ -48,7 +68,7 @@ public class Hall {
 
 
     public void markSeat(int i,int j,boolean b){
-        seats[i][j]=b;
+        seats[i][j].setBooked(b);
     }
 
     public void setID(int ID) {
@@ -85,7 +105,7 @@ public class Hall {
         this.seatingClass3 = seatingClass3;
     }
 
-    public boolean getSeat(int i,int j){
+    public Seat getSeat(int i,int j){
         return seats[i][j];
     }
 

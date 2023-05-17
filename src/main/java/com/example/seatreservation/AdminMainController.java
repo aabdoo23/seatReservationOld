@@ -1,16 +1,11 @@
 package com.example.seatreservation;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AdminMainController implements Initializable {
@@ -34,35 +29,17 @@ public class AdminMainController implements Initializable {
         updateDisplay();
     }
     public void newHALL() throws IOException {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newHall.fxml")));
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
-        stage.setTitle("New hall");
-        stage.setScene(scene);
-        stage.show();
+        globals.openNewForm("newHall.fxml","New hall");
     }
     public void newMOVIE() throws IOException {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newMovie.fxml")));
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
-        stage.setTitle("New movie");
-        stage.setScene(scene);
-        stage.show();
+        globals.openNewForm("newMovie.fxml","New movie");
     }
     public void newParty() throws IOException {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newParty.fxml")));
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
-        stage.setTitle("New party");
-        stage.setScene(scene);
-        stage.show();
+        globals.openNewForm("newParty.fxml","New party");
+
     }
     public void newUser() throws IOException {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newUserView.fxml")));
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
-        stage.setTitle("New user");
-        stage.setScene(scene);
-        stage.show();
+        globals.openNewForm("newUserView.fxml","New user");
+
     }
 }

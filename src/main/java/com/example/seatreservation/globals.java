@@ -48,6 +48,18 @@ public class globals {
         }
         return 0;
     }
+    public static void showErrorAlert(String content){
+        Alert alert=new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERROR");
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    public static void showConfirmationAlert(String content){
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmed");
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
 
     public static void openNewForm(String formName,String title) throws IOException {

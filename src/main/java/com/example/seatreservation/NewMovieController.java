@@ -1,23 +1,17 @@
 package com.example.seatreservation;
 
-import com.gluonhq.charm.glisten.control.TimePicker;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static com.example.seatreservation.globals.showErrorAlert;
 import static com.example.seatreservation.globals.spinnerTF;
 
 public class NewMovieController implements Initializable {
@@ -53,19 +47,13 @@ public class NewMovieController implements Initializable {
             this.image=image;
             tfPath.setImage(image);
         }catch (Exception e){
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Please select a picture");
-            alert.showAndWait();
+            showErrorAlert("Please select a picture");
         }
 
     }
     public void saveButton() {
         if (tfMovieName.getText().isEmpty()  || tfPath==null || taDescription.getText().isEmpty()||dpReleaseDate.getValue()==null) {
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Error: Please fill all information");
-            alert.showAndWait();
+            showErrorAlert("Error: Please fill all information");
             return;
         }
 
@@ -79,11 +67,7 @@ public class NewMovieController implements Initializable {
         movie.setReleaseDate(dpReleaseDate.getValue());
         movie.setImg(image);
         globals.moviesLinkedList.add(movie);
-
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmed");
-        alert.setContentText("Movie registered");
-        alert.showAndWait();
+        globals.showConfirmationAlert("Movie registered");
         Stage stage=(Stage) tfID.getScene().getWindow();
         stage.close();
 

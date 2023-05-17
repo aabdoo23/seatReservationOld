@@ -1,7 +1,7 @@
 package com.example.seatreservation;
 
 public class SeatingClasses {
-    int numberOfRows,seatPricing;
+    private int numberOfRows,seatPricing;
     SeatingClasses(){}
     SeatingClasses(int numberOfRows,int seatPricing){
         this.seatPricing=seatPricing;
