@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Stack;
+
 
 public class MainMenuController implements Initializable {
     public AnchorPane mainPanel;
@@ -39,12 +39,7 @@ public class MainMenuController implements Initializable {
         int id=Integer.parseInt(tfID.getText());
         String pw=pfPW.getText();
         if(id==1&& Objects.equals(pw, "1")){
-            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("adminMain.fxml")));
-            Scene scene=new Scene(root);
-            Stage stage=new Stage();
-            stage.setTitle("Admin");
-            stage.setScene(scene);
-            stage.show();
+            globals.openNewForm("adminMain.fxml","Admin");
             return;
         }
         else if(id==2&& Objects.equals(pw, "2")){
