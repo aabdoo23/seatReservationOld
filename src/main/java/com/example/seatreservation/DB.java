@@ -252,7 +252,7 @@ public class DB {
             statement.setInt(1, partyID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getTimestamp("Slot").toLocalDateTime();;
+                return resultSet.getTimestamp("Slot").toLocalDateTime();
             }
         } catch (SQLException e) {
             e.printStackTrace();

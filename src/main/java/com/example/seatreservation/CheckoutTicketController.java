@@ -40,7 +40,7 @@ public class CheckoutTicketController implements Initializable {
         tfIssueTime.setText(ticket.getIssueTime().toString());//set issue time as now
         tfName.setText(ticket.getUser().getName());//set username
         tfHallName.setText(ticket.getParty().getHall().getName()); //set hall name
-        tfDateTime.setText(ticket.getParty().getSlot().getLtd().toString()); //set party time
+        tfDateTime.setText(ticket.getParty().getSlot().toString()); //set party time
         rbCash.selectedProperty().setValue(true);//select cash option first
         apCC.setDisable(true);//disable cc part
         tfPrice.setText(Double.toString(ticket.getPrice()));//set tkt price
@@ -81,7 +81,7 @@ public class CheckoutTicketController implements Initializable {
         globals.ticketsLinkedList.add(ticket);//add ticket total tickets
         ticket.getUser().addToTickets(ticket);//add ticket to user ticket
         if(cbRegisterAsCC.isSelected()){
-            ticket.getUser().setCard(new CreditCard(tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
+            ticket.getUser().setCard(new CreditCard(globals.createNewRandomID(globals.ccIDs),tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
         }
         globals.showConfirmationAlert("Ticket booked");
         Stage s=(Stage)tfID.getParent().getScene().getWindow();

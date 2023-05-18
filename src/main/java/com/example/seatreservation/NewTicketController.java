@@ -149,8 +149,8 @@ public class NewTicketController implements Initializable {
         parties=new LinkedList<>(); // build content of cbParties
         LocalDate date=dpDate.getValue();
         for (Party party:movie.getParties()){
-            System.out.println(party.getSlot().getLtd().toLocalDate().toString()+" "+date);
-            if(party.getSlot().getLtd().toLocalDate().toString().equals(date.toString())){
+            System.out.println(party.getSlot().toLocalDate().toString()+" "+date);
+            if(party.getSlot().toLocalDate().toString().equals(date.toString())){
                 parties.add(party);
             }
         }
