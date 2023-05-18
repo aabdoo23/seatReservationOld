@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -58,15 +59,13 @@ public class NewUserController implements Initializable {
         }
         if(cbCC.isSelected()){
             if (tfCN.getText().isEmpty() ||tfCN.getText().length()!=16|| tfCHN.getText().isEmpty() || pfCvv.getText().isEmpty()) {
-
                 globals.showErrorAlert("Error: Please fill all card information and check your info");
-
                 return;
             }
         }
         User user = new User(id, first, email, pw, pn);
         if(cbCC.isSelected()){
-            user.setCard(new CreditCard(tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
+            user.setCard(new CreditCard(globals.createNewRandomID(globals.ccIDs),tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
         }
         globals.userLinkedList.add(user);
         globals.showConfirmationAlert("User registered");
@@ -87,6 +86,7 @@ public class NewUserController implements Initializable {
         tfCN.setEditable(cbCC.isSelected());
         pfCvv.setEditable(cbCC.isSelected());
         dpExpDate.setEditable(cbCC.isSelected());
+        dpExpDate.setValue(LocalDate.now());
 
     }
 }

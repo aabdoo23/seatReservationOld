@@ -1,13 +1,12 @@
 package com.example.seatreservation;
 
+import com.gluonhq.charm.glisten.control.AppBar;
+import com.gluonhq.charm.glisten.control.Avatar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,9 +24,14 @@ public class UserMainController implements Initializable {
     @FXML
     public TableColumn<Movie, String> nameCol=new TableColumn<>();
     public Button bookButton;
+    public TextField tfMovieSearch;
+    public AppBar appBar;
+    public Avatar avatar;
+    public Label lbUserName;
     ObservableList<Movie>movies= FXCollections.observableArrayList();
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        lbUserName.setText("Hello, "+globals.signedInUser.getName());
         posterCol.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
             @Override
@@ -46,7 +50,13 @@ public class UserMainController implements Initializable {
         });
         posterCol.setCellValueFactory(new PropertyValueFactory<>("img"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("movieName"));
+//        ObservableList<String>movies=globals.makeObsList(globals.moviesLinkedList);
         tvMoviesTable.setItems(getMoviesList());
+        tfMovieSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            String filter = newValue.toLowerCase();
+            tvMoviesTable.setItems(movies.filtered(movie -> movie.getMovieName().toLowerCase().contains(filter)));
+        });
+//        tvMoviesTable.setItems(movies);
     }
     ObservableList<Movie> getMoviesList()
     {
@@ -55,6 +65,7 @@ public class UserMainController implements Initializable {
         return movies;
     }
     public void book() throws IOException {
+        movies=tvMoviesTable.getItems();
         globals.movieForTicket=movies.get(tvMoviesTable.getSelectionModel().getSelectedIndex());
         globals.openNewForm("newTicket.fxml","New ticket");
 

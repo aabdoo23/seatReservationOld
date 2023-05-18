@@ -28,8 +28,8 @@
       <Label layoutX="278.0" layoutY="176.0" text="Third class seat price:" />
       <Button fx:id="saveButton" layoutX="426.0" layoutY="213.0" mnemonicParsing="false" onAction="#saveButtonC" prefHeight="26.0" prefWidth="94.0" text="Save" />
       <TextField fx:id="tfSeats" editable="false" layoutX="377.0" layoutY="51.0" prefHeight="26.0" prefWidth="142.0" />
-      <Spinner fx:id="tfFCP" editable="true" layoutX="395.0" layoutY="89.0" prefHeight="25.0" prefWidth="124.0" />
-      <Spinner fx:id="tfSCP" editable="true" layoutX="425.0" layoutY="131.0" prefHeight="25.0" prefWidth="94.0" />
-      <Spinner fx:id="tfTCP" editable="true" layoutX="396.0" layoutY="171.0" prefHeight="25.0" prefWidth="124.0" />
+      <Spinner fx:id="tfFCP" layoutX="395.0" layoutY="89.0" prefHeight="25.0" prefWidth="124.0" />
+      <Spinner fx:id="tfSCP" layoutX="425.0" layoutY="131.0" prefHeight="25.0" prefWidth="94.0" />
+      <Spinner fx:id="tfTCP" layoutX="396.0" layoutY="171.0" prefHeight="25.0" prefWidth="124.0" />
    </children>
 </AnchorPane>

@@ -101,14 +101,18 @@ public class NewPartyController implements Initializable {
     public void save(){
         Party party=new Party();
         party.setID(id);
-        Slot slot=new Slot(slots.get(cbSlot.getSelectionModel().getSelectedIndex()));
-        party.setSlot(slot);
+        LocalDateTime ltd=slots.get(cbSlot.getSelectionModel().getSelectedIndex());
+        party.setSlot(ltd);
         Hall hall=globals.hallsLinkedList.get(cbHalls.getSelectionModel().getSelectedIndex());
         party.setHall(hall);
-        hall.markSlotAsBooked(slot.getLtd());
+        hall.markSlotAsBooked(ltd);
         if(movie!=null){
             party.setMovie(movie);
             movie.addToParties(party);
+        }
+        else {
+            globals.showErrorAlert("Select a movie");
+            return;
         }
 
         globals.partyLinkedList.add(party);

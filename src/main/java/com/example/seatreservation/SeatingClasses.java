@@ -1,13 +1,21 @@
 package com.example.seatreservation;
 
 public class SeatingClasses {
-    private int numberOfRows,seatPricing;
+    private int ID,numberOfRows,seatPricing;
     SeatingClasses(){}
-    SeatingClasses(int numberOfRows,int seatPricing){
+    SeatingClasses(int id,int numberOfRows,int seatPricing){
+        this.ID=id;
         this.seatPricing=seatPricing;
         this.numberOfRows=numberOfRows;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public void setNumberOfRows(int numberOfRows) {
         this.numberOfRows = numberOfRows;

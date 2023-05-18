@@ -35,6 +35,7 @@ public class NewTicketController implements Initializable {
     LinkedList<Party>parties=new LinkedList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        globals.spinnerTF(numberOfSeatsSpinner);
         if(selectedParty!=null) {
             int cnt=0;
             for (int i = 0; i < selectedParty.getHall().getRows(); i++) {

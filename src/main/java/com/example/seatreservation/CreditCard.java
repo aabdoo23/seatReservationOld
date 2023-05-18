@@ -3,11 +3,13 @@ package com.example.seatreservation;
 import java.time.LocalDate;
 
 public class CreditCard {
-    private int CVV;
+
+    private int CVV,ID;
     private String cardNumber;
     private String holderName;
     LocalDate expDate;
-    CreditCard(String cardNumber, int cvv, LocalDate expDate, String holderName){
+    CreditCard(int id,String cardNumber, int cvv, LocalDate expDate, String holderName){
+        this.ID=id;
         this.cardNumber=cardNumber;
         this.CVV=cvv;
         this.expDate=expDate;
@@ -16,6 +18,14 @@ public class CreditCard {
 
     public CreditCard() {
 
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public void setCardNumber(String cardNumber) {

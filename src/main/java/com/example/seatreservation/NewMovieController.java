@@ -62,8 +62,6 @@ public class NewMovieController implements Initializable {
         movie.setMovieName(tfMovieName.getText());
         movie.setDescription(taDescription.getText());
         movie.setScreenTime(tfScreenTime.getValue());
-//        LocalTime lt=LocalTime.of(hrsSpinner.getValue(),minSpinner.getValue());
-//        movie.setPlayTime(lt);
         movie.setReleaseDate(dpReleaseDate.getValue());
         movie.setImg(image);
         globals.moviesLinkedList.add(movie);

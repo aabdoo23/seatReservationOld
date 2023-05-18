@@ -14,19 +14,21 @@ import java.util.Objects;
 import java.util.Random;
 
 public class globals {
-
     public static User signedInUser;
     public static Movie movieForTicket;
     public static Ticket currentTKT=new Ticket();
     public static LinkedList<User>userLinkedList=new LinkedList<>();
+    public static LinkedList<SeatingClasses>seatingClassesLinkedList=new LinkedList<>();
+
     public static LinkedList<Ticket>ticketsLinkedList=new LinkedList<>();
     public static LinkedList<Movie>moviesLinkedList=new LinkedList<>();
     public static LinkedList<Party>partyLinkedList=new LinkedList<>();
-
     public static LinkedList<Hall>hallsLinkedList=new LinkedList<>();
-
+    public static boolean[] ccIDs = new boolean[2000];
     public static boolean[] usersIDs = new boolean[2000];
     public static boolean[] ticketsIDs = new boolean[2000];
+    public static boolean[] seatingClassesIDs = new boolean[2000];
+
     public static boolean[] hallsIDs = new boolean[2000];
     public static boolean[] partiesIDs = new boolean[2000];
     public static boolean[] moviesIDs = new boolean[2000];

@@ -82,7 +82,14 @@ public final class newHallController implements Initializable {
         String hn=tfName.getText();
         int fr= FCNspinner.getValue(),sr=SCNspinner.getValue(),tr=TCNspinner.getValue();
         int fp=tfFCP.getValue(),sp=tfSCP.getValue(),tp=tfTCP.getValue();
-        SeatingClasses sc1=new SeatingClasses(fr,fp),sc2=new SeatingClasses(sr,sp),sc3=new SeatingClasses(tr,tp);
+        SeatingClasses
+                sc1=new SeatingClasses(globals.createNewRandomID(globals.seatingClassesIDs),fr,fp),
+                sc2=new SeatingClasses(globals.createNewRandomID(globals.seatingClassesIDs),sr,sp),
+                sc3=new SeatingClasses(globals.createNewRandomID(globals.seatingClassesIDs),tr,tp);
+        globals.seatingClassesLinkedList.add(sc1);
+        globals.seatingClassesLinkedList.add(sc2);
+        globals.seatingClassesLinkedList.add(sc3);
+
         Hall hall=new Hall(id,hn,nr,nc,sc1,sc2,sc3);
         globals.hallsLinkedList.add(hall);
         globals.showConfirmationAlert("Hall registered");

@@ -1,12 +1,14 @@
 package com.example.seatreservation;
 
+import java.time.LocalDateTime;
+
 public class Party {
     private int ID;
-    private Slot slot;
+    private LocalDateTime slot;
     private Movie movie;
     private Hall hall;
     Party(){}
-    Party(int id,Slot slot,Movie mv,Hall hl){
+    Party(int id,LocalDateTime slot,Movie mv,Hall hl){
         this.slot=slot;
         this.hall=hl;
         this.ID=id;
@@ -25,11 +27,11 @@ public class Party {
         this.hall = hall;
     }
 
-    public void setSlot(Slot slot) {
+    public void setSlot(LocalDateTime slot) {
         this.slot = slot;
     }
 
-    public Slot getSlot() {
+    public LocalDateTime getSlot() {
         return slot;
     }
 

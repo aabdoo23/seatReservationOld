@@ -19,27 +19,27 @@ public class AdminMainController implements Initializable {
     public ListView<String> usersList;
     public Button newUserBTN;
     public void updateDisplay(){
-        globals.makeList(globals.hallsLinkedList,hallsList);
-        globals.makeList(globals.partyLinkedList,partiesList);
-        globals.makeList(globals.moviesLinkedList,moviesList);
-        globals.makeList(globals.userLinkedList,usersList);
+        globals.makeList(globals.hallsLinkedList,hallsList);//all halls
+        globals.makeList(globals.partyLinkedList,partiesList);//all parties
+        globals.makeList(globals.moviesLinkedList,moviesList);//all movies
+        globals.makeList(globals.userLinkedList,usersList);//all users
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateDisplay();
     }
     public void newHALL() throws IOException {
-        globals.openNewForm("newHall.fxml","New hall");
+        globals.openNewForm("newHall.fxml","New hall");//open new hall form
     }
     public void newMOVIE() throws IOException {
-        globals.openNewForm("newMovie.fxml","New movie");
+        globals.openNewForm("newMovie.fxml","New movie");//open new movie form
     }
     public void newParty() throws IOException {
-        globals.openNewForm("newParty.fxml","New party");
+        globals.openNewForm("newParty.fxml","New party");//open new party form
 
     }
     public void newUser() throws IOException {
-        globals.openNewForm("newUserView.fxml","New user");
+        globals.openNewForm("newUserView.fxml","New user");//open new user form
 
     }
 }

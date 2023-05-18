@@ -9,6 +9,8 @@ public class Hall {
     private String name;
     private SeatingClasses seatingClass1,seatingClass2,seatingClass3;
     private Map<LocalDateTime, Boolean> slots=new HashMap<>();
+    private Seat[][] seats;
+
     public void markSlotAsBooked(LocalDateTime dateTime) {
         slots.put(dateTime, true);
     }
@@ -16,11 +18,9 @@ public class Hall {
     public void markSlotAsAvailable(LocalDateTime dateTime) {
         slots.put(dateTime, false);
     }
-
     public boolean isSlotBooked(LocalDateTime dateTime) {
         return slots.getOrDefault(dateTime, false);
     }
-    Seat[][] seats;
 
     Hall(int ID,String name,int rows,int columns,SeatingClasses sc1,SeatingClasses sc2,SeatingClasses sc3){
         this.ID=ID;
