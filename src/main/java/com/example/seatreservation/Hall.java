@@ -34,29 +34,39 @@ public class Hall {
         this.seats=new Seat[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j]=new Seat(i,j);
-
+                seats[i][j]=new Seat(globals.createNewRandomID(globals.ccIDs),i,j);
                 seats[i][j].setID(globals.createNewSeqID(seatsIDs));
             }
         }
         for (int i = 0; i < seatingClass1.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
                 seats[i][j].setSeatingClass(seatingClass1);
+                globals.seatsLinkedList.add(seats[i][j]);
             }
         }
         for (int i = 0; i < seatingClass2.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
                 seats[i+ seatingClass1.getNumberOfRows()][j].setSeatingClass(seatingClass2);
+                globals.seatsLinkedList.add(seats[i][j]);
             }
         }for (int i = 0; i < seatingClass3.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
                 seats[i+ seatingClass1.getNumberOfRows()+ seatingClass2.getNumberOfRows()][j].setSeatingClass(seatingClass3);
+                globals.seatsLinkedList.add(seats[i][j]);
             }
         }
 
     }
     public int getRows() {
         return rows;
+    }
+
+    public void setSeats(Seat[][] seats) {
+        this.seats = seats;
+    }
+
+    public Seat[][] getSeats() {
+        return seats;
     }
 
     public void setName(String name) {

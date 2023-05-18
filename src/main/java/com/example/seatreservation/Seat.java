@@ -3,9 +3,9 @@ package com.example.seatreservation;
 public class Seat {
     private int ID;
     private boolean booked;
-    int x,y;
+    private int x,y;
     private SeatingClasses seatingClass;
-    Seat(int x,int y){this.x=x;this.y=y;}
+    Seat(int id,int x,int y){this.ID=id;this.x=x;this.y=y;}
     Seat(int id,int i,int j,boolean booked,SeatingClasses classes){
         this.x=i;
         this.y=j;

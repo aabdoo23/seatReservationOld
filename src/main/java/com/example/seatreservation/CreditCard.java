@@ -3,7 +3,6 @@ package com.example.seatreservation;
 import java.time.LocalDate;
 
 public class CreditCard {
-
     private int CVV,ID;
     private String cardNumber;
     private String holderName;

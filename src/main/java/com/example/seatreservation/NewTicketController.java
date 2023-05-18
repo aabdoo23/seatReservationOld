@@ -178,11 +178,13 @@ public class NewTicketController implements Initializable {
 
     public void save() throws IOException {//confirmBTN
         for (Seat seat:pickedSeats){
+            globals.seatsLinkedList.remove(seat);
             selectedParty.getHall().markSeat(seat.getX(),seat.getY(),seat.isBooked());
+            globals.seatsLinkedList.add(seat);
         }
         Ticket ticket=new Ticket();
         ticket.setID(globals.createNewRandomID(globals.ticketsIDs));
-        ticket.setSeats(pickedSeats);
+        ticket.setSeats(pickedSeats.toString());
         ticket.setParty(selectedParty);
         ticket.setUser(globals.signedInUser);
         ticket.setPrice(Integer.parseInt(lbMoney.getText()));

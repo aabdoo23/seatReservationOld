@@ -65,7 +65,9 @@ public class NewUserController implements Initializable {
         }
         User user = new User(id, first, email, pw, pn);
         if(cbCC.isSelected()){
-            user.setCard(new CreditCard(globals.createNewRandomID(globals.ccIDs),tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
+            CreditCard card=new CreditCard(globals.createNewRandomID(globals.ccIDs),tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText());
+
+            user.setCard(card);
         }
         globals.userLinkedList.add(user);
         globals.showConfirmationAlert("User registered");

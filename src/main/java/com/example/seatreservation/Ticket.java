@@ -9,7 +9,7 @@ public class Ticket {
     private double price;
     private User user;
     private Party party;
-    private LinkedList<Seat>seats;
+    private String seats;
 
     public Ticket(int reservationID, double price, User user, Party party) {
         this.ID= reservationID;
@@ -17,23 +17,23 @@ public class Ticket {
         this.price=price;
         this.user = user;
         this.party=party;
-        seats = new LinkedList<>();
+        seats = "";
     }
 
-    public void setSeats(LinkedList<Seat> seats) {
+    public void setSeats(String seats) {
         this.seats = seats;
     }
     public void addToSeats(Seat seat) {
-        this.seats .add(seat);
+        this.seats+=(seat.toString());
     }
 
-    public LinkedList<Seat> getSeats() {
+    public String  getSeats() {
         return seats;
     }
 
 
     public Ticket() {
-        seats = new LinkedList<>();
+        seats = "";
         this.setIssueTime(LocalTime.now());
     }
 
