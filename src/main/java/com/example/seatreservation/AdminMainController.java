@@ -18,6 +18,11 @@ public class AdminMainController implements Initializable {
     public ListView<String> partiesList;
     public ListView<String> usersList;
     public Button newUserBTN;
+    public Button previewHallBTN;
+    public Button previewMovieBTN;
+    public Button previewPartyBTN;
+    public Button previewUserBTN;
+
     public void updateDisplay(){
         globals.makeList(globals.hallsLinkedList,hallsList);//all halls
         globals.makeList(globals.partyLinkedList,partiesList);//all parties
@@ -42,4 +47,24 @@ public class AdminMainController implements Initializable {
         globals.openNewForm("newUserView.fxml","New user");//open new user form
 
     }
+    public void prevUser() throws IOException {
+        globals.previewedUser=globals.userLinkedList.get(usersList.getSelectionModel().getSelectedIndex());
+        globals.openNewForm("newUserView.fxml","View user");
+        globals.previewedUser=null;
+    }
+    public void prevHall() throws IOException {
+        globals.prevHall=globals.hallsLinkedList.get(hallsList.getSelectionModel().getSelectedIndex());
+        globals.openNewForm("newHall.fxml","View Hall");
+        globals.prevHall=null;
+    }
+    public void prevMovie() throws IOException {
+        globals.previewedMovie=globals.moviesLinkedList.get(moviesList.getSelectionModel().getSelectedIndex());
+        globals.openNewForm("newMovie.fxml","View Movie");
+        globals.previewedMovie=null;
+    }
+    public void prevParty() throws IOException {
+        globals.prevParty=globals.partyLinkedList.get(partiesList.getSelectionModel().getSelectedIndex());
+        globals.openNewForm("newParty.fxml","View party");
+        globals.prevParty=null;
+    }//conjtinue
 }

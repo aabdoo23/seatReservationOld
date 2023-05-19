@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static com.example.seatreservation.globals.prevParty;
+import static com.example.seatreservation.globals.previewedUser;
+
 public class NewUserController implements Initializable {
     @FXML
     public TextField tfID;
@@ -82,13 +85,29 @@ public class NewUserController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tfID.setEditable(false);
-        tfID.setText(Integer.toString(id));
-        tfCHN.setEditable(cbCC.isSelected());
-        tfCN.setEditable(cbCC.isSelected());
-        pfCvv.setEditable(cbCC.isSelected());
-        dpExpDate.setEditable(cbCC.isSelected());
-        dpExpDate.setValue(LocalDate.now());
-
+        if (previewedUser==null) {
+            tfID.setEditable(false);
+            tfID.setText(Integer.toString(id));
+            tfCHN.setEditable(cbCC.isSelected());
+            tfCN.setEditable(cbCC.isSelected());
+            pfCvv.setEditable(cbCC.isSelected());
+            dpExpDate.setEditable(cbCC.isSelected());
+            dpExpDate.setValue(LocalDate.now());
+        }
+        else {
+            mainPanel.setDisable(true);
+            if(previewedUser.getCard()!=null){
+                cbCC.setSelected(true);
+                tfCN.setText(previewedUser.getCard().getCardNumber());
+                tfCHN.setText(previewedUser.getCard().getHolderName());
+                pfCvv.setText(Integer.toString(previewedUser.getCard().getCVV()));
+                dpExpDate.setValue(previewedUser.getCard().getExpDate());
+            }
+            tfID.setText(Integer.toString(previewedUser.getID()));
+            tfPN.setText(previewedUser.getPhoneNumber());
+            tfName.setText(previewedUser.getName());
+            tfEmail.setText(previewedUser.getEmail());
+            pfPW1.setText(previewedUser.getPassword());
+        }
     }
 }

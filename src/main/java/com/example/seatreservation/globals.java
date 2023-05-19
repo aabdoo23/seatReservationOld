@@ -14,6 +14,10 @@ import java.util.Objects;
 import java.util.Random;
 
 public class globals {
+    public static User previewedUser;
+    public static Movie previewedMovie;
+    public static Party prevParty;
+    public static Hall prevHall;
     public static User signedInUser;
     public static Movie movieForTicket;
     public static Ticket currentTKT=new Ticket();

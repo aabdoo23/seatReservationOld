@@ -47,6 +47,7 @@ public class Main extends Application {
 
         new DB();
         DB.getALL();
+
         launch();
         DB.setALL();
     }

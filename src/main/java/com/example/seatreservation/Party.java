@@ -54,7 +54,7 @@ public class Party {
         return "Party" +
                 "\n, ID=" + ID +
                 "\n, slot=" + slot +
-                "\n, movie=" + movie +
+                "\n, Movie=" + movie.getMovieName() +
                 "\n, hall=" + hall +
                 '\n';
     }

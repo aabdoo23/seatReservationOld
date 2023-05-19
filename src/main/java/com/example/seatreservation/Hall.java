@@ -9,7 +9,7 @@ public class Hall {
     private String name;
     private SeatingClasses seatingClass1,seatingClass2,seatingClass3;
     private Map<LocalDateTime, Boolean> slots=new HashMap<>();
-    private Seat[][] seats;
+    private Seat[][] seats=new Seat[1000][1000];
 
     public void markSlotAsBooked(LocalDateTime dateTime) {
         slots.put(dateTime, true);
@@ -34,8 +34,7 @@ public class Hall {
         this.seats=new Seat[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j]=new Seat(globals.createNewRandomID(globals.ccIDs),i,j);
-                seats[i][j].setID(globals.createNewSeqID(seatsIDs));
+                seats[i][j]=new Seat(globals.createNewSeqID(seatsIDs),i,j);
             }
         }
         for (int i = 0; i < seatingClass1.getNumberOfRows(); i++) {
@@ -129,8 +128,24 @@ public class Hall {
         return columns;
     }
 
+//    @Override
+//    public String toString() {
+//        return name ;
+//    }
+
+
     @Override
     public String toString() {
-        return name ;
+        return "Hall" +
+                "\n, ID=" + ID +
+                "\n, rows=" + rows +
+                "\n, columns=" + columns +
+                "\n, name=" + name +
+                "\n, seatingClass1=" + seatingClass1 +
+                "\n, seatingClass2=" + seatingClass2 +
+                "\n, seatingClass3=" + seatingClass3 +
+                "\n, slots=" + slots +
+                "\n, seats=" + Arrays.toString(seats) +
+                '\n';
     }
 }

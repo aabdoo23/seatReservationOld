@@ -35,6 +35,7 @@ public class NewTicketController implements Initializable {
     LinkedList<Party>parties=new LinkedList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         if(selectedParty!=null) { //if there is a selected party from last window
             int cnt=0; //cnt of available seats to set the maximum of choosing
             for (int i = 0; i < selectedParty.getHall().getRows(); i++) { //all the rows of the hall

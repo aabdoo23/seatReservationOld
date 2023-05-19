@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.example.seatreservation.globals.prevHall;
 import static com.example.seatreservation.globals.spinnerTF;
 
 public final class newHallController implements Initializable {
@@ -30,43 +31,59 @@ public final class newHallController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tfID.setEditable(false);
-        tfSeats.setEditable(false);
-        int id=globals.createNewSeqID(globals.hallsIDs);
-        tfID.setText(Integer.toString(id));
-        tfName.setText("Hall "+id);
-        mainPanel.setMaxSize(mainPanel.getPrefHeight(),mainPanel.getPrefWidth());
-        columnSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
-        SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
-        FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
-        TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,30));
-        tfSCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
-        tfFCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
-        tfTCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1000));
+        if(prevHall==null) {
+            tfID.setEditable(false);
+            tfSeats.setEditable(false);
+            int id = globals.createNewSeqID(globals.hallsIDs);
+            tfID.setText(Integer.toString(id));
+            tfName.setText("Hall " + id);
+            mainPanel.setMaxSize(mainPanel.getPrefHeight(), mainPanel.getPrefWidth());
+            columnSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30));
+            SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30));
+            FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30));
+            TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30));
+            tfSCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000));
+            tfFCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000));
+            tfTCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000));
 
-        spinnerTF(tfTCP);
-        spinnerTF(tfSCP);
-        spinnerTF(tfFCP);
-        spinnerTF(columnSpinner);
-        spinnerTF(TCNspinner);
-        spinnerTF(FCNspinner);
-        spinnerTF(SCNspinner);
+            spinnerTF(tfTCP);
+            spinnerTF(tfSCP);
+            spinnerTF(tfFCP);
+            spinnerTF(columnSpinner);
+            spinnerTF(TCNspinner);
+            spinnerTF(FCNspinner);
+            spinnerTF(SCNspinner);
 
 
-        initDisplay();
+            initDisplay();
 
-        columnSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            initDisplay();
-        });
-        FCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            initDisplay();
-        });
-        SCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            initDisplay();
-        });
-        TCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            initDisplay();
-        });
+            columnSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                initDisplay();
+            });
+            FCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                initDisplay();
+            });
+            SCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                initDisplay();
+            });
+            TCNspinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                initDisplay();
+            });
+        }
+        else{
+            mainPanel.setDisable(true);
+            tfID.setText(Integer.toString(prevHall.getID()));
+            tfName.setText(prevHall.getName());
+            columnSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getColumns(), prevHall.getColumns()));
+            rowsSpinner.setText(Integer.toString(prevHall.getRows()));
+            SCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass2().getNumberOfRows(), prevHall.getSeatingClass2().getNumberOfRows()));
+            FCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass1().getNumberOfRows(), prevHall.getSeatingClass1().getNumberOfRows()));
+            TCNspinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass3().getNumberOfRows(), prevHall.getSeatingClass3().getNumberOfRows()));
+            tfSCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass2().getSeatPricing(), prevHall.getSeatingClass2().getSeatPricing()));
+            tfFCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass1().getSeatPricing(), prevHall.getSeatingClass1().getSeatPricing()));
+            tfTCP.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(prevHall.getSeatingClass3().getSeatPricing(), prevHall.getSeatingClass3().getSeatPricing()));
+            tfSeats.setText(Integer.toString(prevHall.getColumns()*prevHall.getRows()));
+        }
     }
 
 

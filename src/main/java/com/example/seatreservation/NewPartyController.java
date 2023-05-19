@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+import static com.example.seatreservation.globals.prevParty;
+
 public class NewPartyController implements Initializable {
 
     public AnchorPane mainPanel;
@@ -57,23 +59,42 @@ public class NewPartyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        id=globals.createNewSeqID(globals.partiesIDs);
-        tfID.setText(Integer.toString(id));
-        globals.makeList(globals.moviesLinkedList,moviesList);
-        dpDate.setValue(LocalDate.now());
-        ObservableList<String>movies=globals.makeObsList(globals.moviesLinkedList);
-        tfMovieSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            String filter = newValue.toLowerCase();
-            moviesList.setItems(movies.filtered(movie -> movie.toLowerCase().contains(filter)));
-        });
+        if(prevParty==null) {
+            id = globals.createNewSeqID(globals.partiesIDs);
+            tfID.setText(Integer.toString(id));
+            globals.makeList(globals.moviesLinkedList, moviesList);
+            dpDate.setValue(LocalDate.now());
+            ObservableList<String> movies = globals.makeObsList(globals.moviesLinkedList);
+            tfMovieSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                String filter = newValue.toLowerCase();
+                moviesList.setItems(movies.filtered(movie -> movie.toLowerCase().contains(filter)));
+            });
 
-        globals.makeList(globals.hallsLinkedList,cbHalls);
-        cbHalls.getSelectionModel().selectFirst();
-        cbSlot.getSelectionModel().selectFirst();
-        updateDisplay();
-        cbHalls.valueProperty().addListener((observable, oldValue, newValue) -> {
+            globals.makeList(globals.hallsLinkedList, cbHalls);
+            cbHalls.getSelectionModel().selectFirst();
+            cbSlot.getSelectionModel().selectFirst();
             updateDisplay();
-        });
+            cbHalls.valueProperty().addListener((observable, oldValue, newValue) -> {
+                updateDisplay();
+            });
+        }
+        else{
+            id = prevParty.getID();
+            tfID.setText(Integer.toString(id));
+            globals.makeList(globals.moviesLinkedList, moviesList);
+            moviesList.getSelectionModel().select(prevParty.getMovie().toString());
+            dpDate.setValue(prevParty.getSlot().toLocalDate());
+
+            globals.makeList(globals.hallsLinkedList, cbHalls);
+            cbHalls.getSelectionModel().select(prevParty.getHall().toString());
+            cbSlot.getSelectionModel().select(prevParty.getSlot().toLocalTime().toString());
+            tfMovieSearch.setText(prevParty.getMovie().toString());
+            saveBTN.setDisable(true);
+            tfMovieSearch.setDisable(true);
+            selectBTN.setDisable(true);
+            moviesList.setDisable(true);
+            dpDate.setDisable(true);
+        }
 
     }
     Movie movie=null;

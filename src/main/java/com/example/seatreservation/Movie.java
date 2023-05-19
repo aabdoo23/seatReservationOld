@@ -53,6 +53,10 @@ public class Movie {
         return img;
     }
 
+    public void setParties(LinkedList<Party> parties) {
+        this.parties = parties;
+    }
+
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
@@ -86,4 +90,13 @@ public class Movie {
     public String toString() {
         return movieName;
     }
+//
+//    @Override
+//    public String toString() {
+//        return "Movie" +
+//                "\n, ID=" + ID +
+//                "\n, movieName=" + movieName +
+//                "\n, parties=" + parties +
+//                '\n';
+//    }
 }

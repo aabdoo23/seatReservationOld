@@ -11,8 +11,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import static com.example.seatreservation.globals.showErrorAlert;
-import static com.example.seatreservation.globals.spinnerTF;
+import static com.example.seatreservation.globals.*;
 
 public class NewMovieController implements Initializable {
 
@@ -29,14 +28,32 @@ public class NewMovieController implements Initializable {
     Image image;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        hrsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23 ));
-//        minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59 ));
-        id=globals.createNewRandomID(globals.moviesIDs);
-        tfID.setText(Integer.toString(id));
-        tfID.setEditable(false);
-        spinnerTF(tfScreenTime);
-        tfScreenTime.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,200));
-        dpReleaseDate.setValue(LocalDate.now());
+        if(previewedMovie==null) {
+            id = globals.createNewRandomID(globals.moviesIDs);
+            tfID.setText(Integer.toString(id));
+            tfID.setEditable(false);
+            spinnerTF(tfScreenTime);
+            tfScreenTime.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 200));
+            dpReleaseDate.setValue(LocalDate.now());
+        }
+        else{
+            id = previewedMovie.getID();
+            tfID.setText(Integer.toString(id));
+            tfID.setEditable(false);
+            spinnerTF(tfScreenTime);
+            tfScreenTime.setDisable(true);
+
+            tfScreenTime.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(previewedMovie.getScreenTime(), previewedMovie.getScreenTime()+1));
+            dpReleaseDate.setValue(previewedMovie.getReleaseDate());
+            tfPath.setImage(previewedMovie.getImg());
+            tfMovieName.setText(previewedMovie.getMovieName());
+            taDescription.setText(previewedMovie.getDescription());
+            tfMovieName.setDisable(true);
+            taDescription.setDisable(true);
+            selectPathBtn.setDisable(true);
+            saveButton.setDisable(true);
+            dpReleaseDate.setDisable(true);
+        }
     }
     public void selectIMG(){
         try {

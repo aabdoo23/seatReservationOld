@@ -13,15 +13,15 @@
             <Insets />
          </opaqueInsets></Button>
       <Button fx:id="newPartyBTN" layoutX="401.0" layoutY="509.0" mnemonicParsing="false" onAction="#newParty" style="-fx-background-color: #cf3f32;" text="New party" textFill="WHITE" />
-      <Button fx:id="refreshBTN" layoutX="755.0" layoutY="509.0" mnemonicParsing="false" onAction="#updateDisplay" style="-fx-background-color: #cf3f32;" text="Refresh" textFill="WHITE" />
+      <Button fx:id="refreshBTN" layoutX="715.0" layoutY="508.0" mnemonicParsing="false" onAction="#updateDisplay" prefHeight="26.0" prefWidth="37.0" style="-fx-background-color: #cf3f32;" text="Refresh" textFill="WHITE" />
       <ListView fx:id="hallsList" layoutX="51.0" layoutY="50.0" prefHeight="446.0" prefWidth="175.0" style="-fx-background-color: #bcb8b8;" />
       <ListView fx:id="moviesList" layoutX="226.0" layoutY="50.0" prefHeight="446.0" prefWidth="175.0" style="-fx-background-color: #bcb8b8;" />
       <ListView fx:id="partiesList" layoutX="401.0" layoutY="50.0" prefHeight="446.0" prefWidth="175.0" style="-fx-background-color: #bcb8b8;" />
-      <ListView fx:id="usersList" layoutX="576.0" layoutY="50.0" prefHeight="446.0" prefWidth="175.0" style="-fx-background-color: #bcb8b8;" />
+      <ListView fx:id="usersList" layoutX="577.0" layoutY="50.0" prefHeight="446.0" prefWidth="175.0" style="-fx-background-color: #bcb8b8;" />
       <Button fx:id="newUserBTN" layoutX="576.0" layoutY="509.0" mnemonicParsing="false" onAction="#newUser" style="-fx-background-color: #cf3f32;" text="New user" textFill="WHITE" />
-      <Button layoutX="122.0" layoutY="509.0" mnemonicParsing="false" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
-      <Button layoutX="314.0" layoutY="509.0" mnemonicParsing="false" style="-fx-background-color: #cf3f32;" text="preview" textFill="WHITE" />
-      <Button layoutX="478.0" layoutY="509.0" mnemonicParsing="false" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
-      <Button layoutX="651.0" layoutY="509.0" mnemonicParsing="false" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
+      <Button fx:id="previewHallBTN" layoutX="122.0" layoutY="509.0" mnemonicParsing="false" onAction="#prevHall" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
+      <Button fx:id="previewMovieBTN" layoutX="314.0" layoutY="509.0" mnemonicParsing="false" onAction="#prevMovie" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
+      <Button fx:id="previewPartyBTN" layoutX="478.0" layoutY="509.0" mnemonicParsing="false" onAction="#prevParty" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
+      <Button fx:id="previewUserBTN" layoutX="651.0" layoutY="509.0" mnemonicParsing="false" onAction="#prevUser" style="-fx-background-color: #cf3f32;" text="Preview" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -25,12 +25,12 @@ public class DB {
     }
     public static void getALL(){
         globals.seatingClassesLinkedList=getAllSeatingClasses();
-        globals.userLinkedList=getAllUsers();
+        getAllSeats();
         globals.hallsLinkedList=getAllHalls();
         globals.moviesLinkedList=getAllMovies();
         globals.partyLinkedList=getAllParties();
         globals.ticketsLinkedList=getAllTickets();
-        globals.seatsLinkedList=getAllSeats();
+        globals.userLinkedList=getAllUsers();
     }
     public static void setALL(){
         truncateCC();
@@ -48,7 +48,7 @@ public class DB {
         truncateTickets();
         setAllTickets(globals.ticketsLinkedList);
         truncateSeats();
-        setAllSeats(globals.seatsLinkedList);
+        setAllSeats();
     }
 
     public static void truncateSeatingClasses() {
@@ -91,18 +91,9 @@ public class DB {
         return null; // Seating class not found or error occurred
     }
     public static SeatingClasses getSeatingClassBySeatID(int seatID) {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM SeatingClasses WHERE ID IN (SELECT seatingClassID FROM Seat WHERE ID = ?)")) {
-            statement.setInt(1, seatID);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int seatingClassID = resultSet.getInt("ID");
-                int numberOfRows = resultSet.getInt("numberOfRows");
-                int seatPricing = resultSet.getInt("seatPricing");
-                // Retrieve other seating class properties as needed
-                return new SeatingClasses(seatingClassID, numberOfRows, seatPricing);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        globals.seatingClassesLinkedList=getAllSeatingClasses();
+        for (SeatingClasses sc:globals.seatingClassesLinkedList){
+
         }
         return null; // Seat or seating class not found or error occurred
     }
@@ -153,12 +144,6 @@ public class DB {
                     }
                 }
                 Hall hall = new Hall(id,name, rows, columns, s1, s2, s3);
-                LinkedList<Seat>seats=getHallSeats(id);
-                Seat[][] seats1=new Seat[rows][columns];
-                for (Seat seat:seats){
-                    seats1[seat.getX()][seat.getY()]=seat;
-                }
-                hall.setSeats(seats1);
                 hallList.add(hall);
             }
         } catch (SQLException e) {
@@ -190,7 +175,9 @@ public class DB {
                         s3=seatingClasses;
                     }
                 }
-                return new Hall(id,name, rows, columns, s1, s2, s3);
+                Hall hall= new Hall(id,name, rows, columns, s1, s2, s3);
+                hall.setSeats(getHallSeats(hall.getID()));
+                return hall;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -305,7 +292,7 @@ public class DB {
         return userList;
     }
     public static User getUserByTicketID(int ticketID) {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE ID IN (SELECT userID FROM Ticket WHERE ID = ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE ID IN (SELECT userID FROM Ticket WHERE ID = ?)")) {
             statement.setInt(1, ticketID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -320,7 +307,7 @@ public class DB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Ticket or user not found or error occurred
+        return null;
     }
 
     public static void setAllUsers(LinkedList<User> userList) {
@@ -455,11 +442,20 @@ public class DB {
                 globals.partiesIDs[ID]=true;
 
                 Party party = new Party(ID, getSlotByPartyID(ID), getMovieByPartyID(ID), getHallByPartyID(ID));
+                for (Movie movie:globals.moviesLinkedList){
+                    if (movie.getID()== Objects.requireNonNull(getMovieByPartyID(ID)).getID()){
+                        movie.addToParties(party);
+                    }
+                }
                 partyList.add(party);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for (Party party:partyList){
+            party.getHall().markSlotAsBooked(getSlotByPartyID(party.getID()));
+        }
+
         return partyList;
     }
     public static Party getPartyByTicketID(int ticketID) {
@@ -500,28 +496,13 @@ public class DB {
             e.printStackTrace();
         }
     }
-    public static LinkedList<Seat> getAllSeats() {
-        LinkedList<Seat> seatList = new LinkedList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Seat");
-            while (resultSet.next()) {
-                int ID = resultSet.getInt("ID");
-                globals.seatsIDs[ID]=true;
-
-                boolean booked = resultSet.getBoolean("booked");
-                int x = resultSet.getInt("x");
-                int y = resultSet.getInt("y");
-                int seatingClassID = resultSet.getInt("seatingClassID");
-
-                Seat seat = new Seat(ID, x, y, booked,getSeatingClassByID(seatingClassID));
-                seatList.add(seat);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static void getAllSeats() {
+        globals.hallsLinkedList=getAllHalls();
+        for (Hall hall:globals.hallsLinkedList){
+            hall.setSeats(getHallSeats(hall.getID()));
         }
-        return seatList;
     }
-    public static LinkedList<Seat> getHallSeats(int hallID) {
+    public static Seat [][] getHallSeats(int hallID) {
         LinkedList<Seat> seatList = new LinkedList<>();
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Seat WHERE hallID = ?")) {
             statement.setInt(1, hallID);
@@ -541,18 +522,38 @@ public class DB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return seatList;
+        Hall haller = null;
+        globals.hallsLinkedList=getAllHalls();
+        for (Hall hall:globals.hallsLinkedList){
+            if(hall.getID()==hallID){
+                haller=hall;
+                break;
+            }
+        }
+
+        Seat [][] seats=new Seat[haller.getRows()][haller.getColumns()];
+        for (Seat seat:seatList){
+            seats[seat.getX()][seat.getY()]=seat;
+        }
+        return seats;
+
     }
 
-    public static void setAllSeats(LinkedList<Seat> seatList) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Seat (ID, booked, x, y, seatingClassID) VALUES (?, ?, ?, ?, ?)")) {
-            for (Seat seat : seatList) {
-                statement.setInt(1, seat.getID());
-                statement.setBoolean(2, seat.isBooked());
-                statement.setInt(3, seat.getX());
-                statement.setInt(4, seat.getY());
-                statement.setInt(5, Objects.requireNonNull(getSeatingClassBySeatID(seat.getID())).getID());
-                statement.executeUpdate();
+    public static void setAllSeats() {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Seat (ID, booked, x, y,seatingClassID) VALUES (?, ?, ?, ?,?)")) {
+            for (Hall hall:globals.hallsLinkedList) {
+                System.out.println(hall.getID());
+                for (int i=0;i<hall.getRows();i++){
+                    for (int j=0;j<hall.getColumns();j++){
+                        Seat seat=hall.getSeat(i,j);
+                        statement.setInt(1, seat.getID());
+                        statement.setBoolean(2, seat.isBooked());
+                        statement.setInt(3, seat.getX());
+                        statement.setInt(4, seat.getY());
+                        statement.setInt(5, Objects.requireNonNull(getSeatingClassBySeatID(seat.getID())).getID());
+                        statement.executeUpdate();
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -567,6 +568,7 @@ public class DB {
         }
     }
     public static LinkedList<Ticket> getAllTickets() {
+        globals.userLinkedList=getAllUsers();
         LinkedList<Ticket> ticketList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Ticket");
@@ -577,6 +579,12 @@ public class DB {
                 double price = resultSet.getDouble("price");
                 String seats= resultSet.getString("seats");
                 Ticket ticket = new Ticket(ID, price, getUserByTicketID(ID), getPartyByTicketID(ID));
+                for (User user:globals.userLinkedList){
+                    if(user.getID()==getUserByTicketID(ID).getID()){
+                        user.addToTickets(ticket);
+                    }
+                }
+                ticket.setIssueTime(issueTime);
                 ticket.setSeats(seats);
                 ticketList.add(ticket);
             }
