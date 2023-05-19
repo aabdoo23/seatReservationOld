@@ -28,9 +28,9 @@ public class DB {
         globals.userLinkedList=getAllUsers();
         globals.hallsLinkedList=getAllHalls();
         globals.moviesLinkedList=getAllMovies();
-        globals.seatsLinkedList=getAllSeats();
         globals.partyLinkedList=getAllParties();
         globals.ticketsLinkedList=getAllTickets();
+        globals.seatsLinkedList=getAllSeats();
     }
     public static void setALL(){
         truncateCC();
@@ -43,12 +43,12 @@ public class DB {
         setAllHalls(globals.hallsLinkedList);
         truncateMovies();
         setAllMovies(globals.moviesLinkedList);
-        truncateSeats();
-        setAllSeats(globals.seatsLinkedList);
         truncateParties();
         setAllParties(globals.partyLinkedList);
         truncateTickets();
         setAllTickets(globals.ticketsLinkedList);
+        truncateSeats();
+        setAllSeats(globals.seatsLinkedList);
     }
 
     public static void truncateSeatingClasses() {
@@ -479,7 +479,7 @@ public class DB {
     }
 
     public static void setAllParties(LinkedList<Party> partyList) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Party (ID, slotID, movieID, hallID) VALUES (?, ?, ?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Party (ID, slot, movieID, hallID) VALUES (?, ?, ?, ?)")) {
             for (Party party : partyList) {
                 statement.setInt(1, party.getID());
                 statement.setTimestamp(2, Timestamp.valueOf(party.getSlot()));

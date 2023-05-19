@@ -22,8 +22,8 @@
         <TextArea fx:id="taDescription" layoutX="120.0" layoutY="295.0" prefHeight="124.0" prefWidth="389.0" promptText="Enter movie description" />
         <Button fx:id="saveButton" layoutX="356.0" layoutY="434.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="30.0" prefWidth="151.0" text="Save" textAlignment="CENTER" />
       <Label layoutX="25.0" layoutY="136.0" text="Poster:" />
-      <Button fx:id="selectPathBtn" layoutX="285.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectIMG" prefHeight="26.0" prefWidth="29.0" text="..." />
-      <ImageView fx:id="tfPath" fitHeight="150.0" fitWidth="200.0" layoutX="79.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="selectPathBtn" layoutX="256.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectIMG" prefHeight="26.0" prefWidth="29.0" text="..." />
+      <ImageView fx:id="tfPath" fitHeight="150.0" fitWidth="158.0" layoutX="79.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" />
       <Spinner fx:id="tfScreenTime" layoutX="98.0" layoutY="91.0" />
     </children>
 </AnchorPane>

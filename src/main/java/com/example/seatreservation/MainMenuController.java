@@ -42,13 +42,16 @@ public class MainMenuController implements Initializable {
                 if(Objects.equals(user.getPassword(), pw)){
                     globals.signedInUser=user;
                     globals.openNewForm("userMain.fxml","User");
+                    tfID.setText("");
                 }
                 else{
                     globals.showErrorAlert("Invalid password");
                 }
-                break;
+                pfPW.setText("");
+                return;
             }
         }
+        globals.showErrorAlert("Invalid credentials");
         tfID.setText("");
         pfPW.setText("");
     }

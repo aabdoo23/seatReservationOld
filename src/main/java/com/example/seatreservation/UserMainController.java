@@ -24,14 +24,10 @@ public class UserMainController implements Initializable {
     @FXML
     public TableColumn<Movie, String> nameCol=new TableColumn<>();
     public Button bookButton;
-    public TextField tfMovieSearch;
-    public AppBar appBar;
-    public Avatar avatar;
-    public Label lbUserName;
+//    public TextField tfMovieSearch;
     ObservableList<Movie>movies= FXCollections.observableArrayList();
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        lbUserName.setText("Hello, "+globals.signedInUser.getName());
         posterCol.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
             @Override
@@ -42,8 +38,8 @@ public class UserMainController implements Initializable {
                     setGraphic(null);
                 } else {
                     imageView.setImage(image);
-                    imageView.setFitWidth(100);
-                    imageView.setFitHeight(100);
+                    imageView.setFitWidth(80);
+                    imageView.setFitHeight(120);
                     setGraphic(imageView);
                 }
             }
@@ -52,10 +48,10 @@ public class UserMainController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("movieName"));
 //        ObservableList<String>movies=globals.makeObsList(globals.moviesLinkedList);
         tvMoviesTable.setItems(getMoviesList());
-        tfMovieSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            String filter = newValue.toLowerCase();
-            tvMoviesTable.setItems(movies.filtered(movie -> movie.getMovieName().toLowerCase().contains(filter)));
-        });
+//        tfMovieSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+//            String filter = newValue.toLowerCase();
+//            tvMoviesTable.setItems(movies.filtered(movie -> movie.getMovieName().toLowerCase().contains(filter)));
+//        });
 //        tvMoviesTable.setItems(movies);
     }
     ObservableList<Movie> getMoviesList()
