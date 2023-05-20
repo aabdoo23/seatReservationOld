@@ -88,6 +88,6 @@ public class User {
                 "\n, password=" + password +
                 "\n, phoneNumber=" + phoneNumber +
                 "\n, card=" + card +
-                '\n';
+                "\nTKTs="+tickets;
     }
 }

@@ -48,9 +48,11 @@ public class CheckoutTicketController implements Initializable {
         dpExpDate.setValue(LocalDate.now()); //date preset to now
         rbCash.setOnAction(e->{//if clicked on rbCash
             rbCash.selectedProperty().setValue(!rbCash.isSelected()); //switch selection
+            rbCC.selectedProperty().setValue(!rbCC.isSelected());//switch selection
             apCC.setDisable(rbCash.isSelected());//if selected cash disable cc part
         });
         rbCC.setOnAction(e -> {//if clicked on rbCC
+            rbCash.selectedProperty().setValue(!rbCash.isSelected()); //switch selection
             rbCC.selectedProperty().setValue(!rbCC.isSelected());//switch selection
         });
         if(ticket.getUser().getCard()==null){//if user has no card

@@ -22,12 +22,15 @@ public class AdminMainController implements Initializable {
     public Button previewMovieBTN;
     public Button previewPartyBTN;
     public Button previewUserBTN;
+    public ListView<String> ticketsList;
+    public Button previewTKTbtn;
 
     public void updateDisplay(){
         globals.makeList(globals.hallsLinkedList,hallsList);//all halls
         globals.makeList(globals.partyLinkedList,partiesList);//all parties
         globals.makeList(globals.moviesLinkedList,moviesList);//all movies
         globals.makeList(globals.userLinkedList,usersList);//all users
+        globals.makeList(globals.ticketsLinkedList,ticketsList);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,17 +38,25 @@ public class AdminMainController implements Initializable {
     }
     public void newHALL() throws IOException {
         globals.openNewForm("newHall.fxml","New hall");//open new hall form
+        updateDisplay();
     }
     public void newMOVIE() throws IOException {
         globals.openNewForm("newMovie.fxml","New movie");//open new movie form
+        updateDisplay();
     }
     public void newParty() throws IOException {
         globals.openNewForm("newParty.fxml","New party");//open new party form
+        updateDisplay();
 
     }
     public void newUser() throws IOException {
         globals.openNewForm("newUserView.fxml","New user");//open new user form
-
+        updateDisplay();
+    }
+    public void prevTKT() throws IOException {
+        globals.prevTKT=globals.ticketsLinkedList.get(ticketsList.getSelectionModel().getSelectedIndex());
+        globals.openNewForm("checkoutTicket.fxml","View ticket");//open new user form
+        globals.prevTKT=null;
     }
     public void prevUser() throws IOException {
         globals.previewedUser=globals.userLinkedList.get(usersList.getSelectionModel().getSelectedIndex());

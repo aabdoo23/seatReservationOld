@@ -32,4 +32,13 @@ public class SeatingClasses {
     public int getNumberOfRows() {
         return numberOfRows;
     }
+
+    @Override
+    public String toString() {
+        return "SeatingClasses" +
+                "\n, ID=" + ID +
+                "\n, numberOfRows=" + numberOfRows +
+                "\n, seatPricing=" + seatPricing +
+                '\n';
+    }
 }

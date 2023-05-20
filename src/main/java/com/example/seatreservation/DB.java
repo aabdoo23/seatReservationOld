@@ -90,13 +90,13 @@ public class DB {
         }
         return null; // Seating class not found or error occurred
     }
-    public static SeatingClasses getSeatingClassBySeatID(int seatID) {
-        globals.seatingClassesLinkedList=getAllSeatingClasses();
-        for (SeatingClasses sc:globals.seatingClassesLinkedList){
-
-        }
-        return null; // Seat or seating class not found or error occurred
-    }
+//    public static SeatingClasses getSeatingClassBySeatID(int seatID) {
+//        globals.seatingClassesLinkedList=getAllSeatingClasses();
+//        for (SeatingClasses sc:globals.seatingClassesLinkedList){
+//            if (sc.ge)
+//        }
+//        return null; // Seat or seating class not found or error occurred
+//    }
     public static void setAllSeatingClasses(LinkedList<SeatingClasses> seatingClassesList) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO SeatingClasses (ID, numberOfRows, seatPricing) VALUES (?, ?, ?)")) {
             for (SeatingClasses seatingClasses : seatingClassesList) {
@@ -453,7 +453,12 @@ public class DB {
             e.printStackTrace();
         }
         for (Party party:partyList){
-            party.getHall().markSlotAsBooked(getSlotByPartyID(party.getID()));
+            for (Hall hall:globals.hallsLinkedList){
+                if(hall.getID()==party.getHall().getID()){
+                    party.getHall().markSlotAsBooked(getSlotByPartyID(party.getID()));
+                    hall.markSlotAsBooked(getSlotByPartyID(party.getID()));
+                }
+            }
         }
 
         return partyList;
@@ -540,7 +545,7 @@ public class DB {
     }
 
     public static void setAllSeats() {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Seat (ID, booked, x, y,seatingClassID) VALUES (?, ?, ?, ?,?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Seat (ID, booked, x, y,seatingClassID,hallID) VALUES (?, ?, ?, ?, ?, ?)")) {
             for (Hall hall:globals.hallsLinkedList) {
                 System.out.println(hall.getID());
                 for (int i=0;i<hall.getRows();i++){
@@ -550,7 +555,8 @@ public class DB {
                         statement.setBoolean(2, seat.isBooked());
                         statement.setInt(3, seat.getX());
                         statement.setInt(4, seat.getY());
-                        statement.setInt(5, Objects.requireNonNull(getSeatingClassBySeatID(seat.getID())).getID());
+                        statement.setInt(5, seat.getSeatingClass().getID());
+                        statement.setInt(6,hall.getID());
                         statement.executeUpdate();
                     }
                 }

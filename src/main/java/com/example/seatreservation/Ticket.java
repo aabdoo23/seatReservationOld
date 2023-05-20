@@ -75,4 +75,16 @@ public class Ticket {
     public Party getParty() {
         return party;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket" +
+                "\n, ID=" + ID +
+                "\n, issueTime=" + issueTime +
+                "\n, price=" + price +
+                "\n, user=" + user.getName() +
+                "\n, party=" + party +
+                "\n, seats=" + seats +
+                '\n';
+    }
 }

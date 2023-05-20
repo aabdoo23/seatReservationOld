@@ -64,6 +64,8 @@ public class UserMainController implements Initializable {
         movies=tvMoviesTable.getItems();
         globals.movieForTicket=movies.get(tvMoviesTable.getSelectionModel().getSelectedIndex());
         globals.openNewForm("newTicket.fxml","New ticket");
-
+    }
+    public void viewTKTs() throws IOException {
+        globals.openNewForm("viewUserTKT.fxml","Tickets");
     }
 }

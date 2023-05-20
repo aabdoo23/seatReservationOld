@@ -128,24 +128,24 @@ public class Hall {
         return columns;
     }
 
-//    @Override
-//    public String toString() {
-//        return name ;
-//    }
-
-
     @Override
     public String toString() {
-        return "Hall" +
-                "\n, ID=" + ID +
-                "\n, rows=" + rows +
-                "\n, columns=" + columns +
-                "\n, name=" + name +
-                "\n, seatingClass1=" + seatingClass1 +
-                "\n, seatingClass2=" + seatingClass2 +
-                "\n, seatingClass3=" + seatingClass3 +
-                "\n, slots=" + slots +
-                "\n, seats=" + Arrays.toString(seats) +
-                '\n';
+        return name ;
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Hall" +
+//                "\n, ID=" + ID +
+//                "\n, rows=" + rows +
+//                "\n, columns=" + columns +
+//                "\n, name=" + name +
+//                "\n, seatingClass1=" + seatingClass1 +
+//                "\n, seatingClass2=" + seatingClass2 +
+//                "\n, seatingClass3=" + seatingClass3 +
+//                "\n, slots=" + slots +
+//                "\n, seats=" + Arrays.toString(seats) +
+//                '\n';
+//    }
 }
