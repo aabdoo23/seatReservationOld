@@ -2,7 +2,10 @@ package com.example.seatreservation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
@@ -12,7 +15,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static com.example.seatreservation.globals.prevParty;
+
 import static com.example.seatreservation.globals.previewedUser;
 
 public class NewUserController implements Initializable {
@@ -24,27 +27,27 @@ public class NewUserController implements Initializable {
     public TextField tfName;
 
     @FXML
-    public TextField tfEmail=new TextField();
+    public TextField tfEmail;
     @FXML
-    public TextField tfPN=new TextField();
+    public TextField tfPN;
     @FXML
-    public PasswordField pfPW1=new PasswordField();
+    public PasswordField pfPW1;
     @FXML
-    public PasswordField pfPW2=new PasswordField();
+    public PasswordField pfPW2;
     @FXML
-    public CheckBox cbCC=new CheckBox();
+    public CheckBox cbCC;
     @FXML
-    public TextField tfCN=new TextField();
+    public TextField tfCN;
     @FXML
-    public DatePicker dpExpDate=new DatePicker();
+    public DatePicker dpExpDate;
     @FXML
-    public TextField tfCHN=new TextField();
+    public TextField tfCHN;
     @FXML
-    public PasswordField pfCvv=new PasswordField();
+    public PasswordField pfCvv;
     @FXML
-    public Button saveButton=new Button();
+    public Button saveButton;
     int id=globals.createNewRandomID(globals.usersIDs);
-    public void save(ActionEvent event) {
+    public void save() {
         String email = tfEmail.getText();
         String first = tfName.getText();
         String pn = tfPN.getText();
@@ -77,7 +80,7 @@ public class NewUserController implements Initializable {
         Stage stage=(Stage) tfID.getScene().getWindow();
         stage.close();
     }
-    public void clickCB(ActionEvent e) {
+    public void clickCB() {
         tfCHN.setEditable(cbCC.isSelected());
         tfCN.setEditable(cbCC.isSelected());
         pfCvv.setEditable(cbCC.isSelected());

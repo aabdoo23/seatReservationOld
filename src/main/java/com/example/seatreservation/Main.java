@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,14 +20,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainMenu.fxml"))));
-
-//        root.getChildren().add(grids.get(0));
         root=getPane(0);
-
-
-//        root=getPane(1);
-        Scene scene = new Scene(root, 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(root, 820, 555);
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
@@ -43,11 +39,10 @@ public class Main extends Application {
         cur_idx=idx;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         new DB();
         DB.getALL();
-
         launch();
         DB.setALL();
     }

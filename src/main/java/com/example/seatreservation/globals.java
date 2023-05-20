@@ -34,7 +34,7 @@ public class globals {
     public static boolean[] usersIDs = new boolean[2000];
     public static boolean[] ticketsIDs = new boolean[2000];
     public static boolean[] seatingClassesIDs = new boolean[2000];
-    public static boolean[] seatsIDs = new boolean[2000];
+    public static boolean[] seatsIDs = new boolean[200000];
 
     public static boolean[] hallsIDs = new boolean[2000];
     public static boolean[] partiesIDs = new boolean[2000];

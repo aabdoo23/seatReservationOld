@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 public class DB {
     private static Connection connection;
@@ -23,16 +24,20 @@ public class DB {
             System.out.println(e);
         }
     }
-    public static void getALL(){
-        globals.seatingClassesLinkedList=getAllSeatingClasses();
+
+    public static void getALL() {
+        globals.seatingClassesLinkedList = getAllSeatingClasses();
         getAllSeats();
-        globals.hallsLinkedList=getAllHalls();
-        globals.moviesLinkedList=getAllMovies();
-        globals.partyLinkedList=getAllParties();
-        globals.ticketsLinkedList=getAllTickets();
-        globals.userLinkedList=getAllUsers();
+        globals.hallsLinkedList = getAllHalls();
+        globals.moviesLinkedList = getAllMovies();
+        globals.partyLinkedList = getAllParties();
+        globals.ticketsLinkedList = getAllTickets();
+        globals.userLinkedList = getAllUsers();
+        getUsersTKTs();
+        getPartiesSeats();
     }
-    public static void setALL(){
+
+    public static void setALL() throws SQLException {
         truncateCC();
         setAllCC();
         truncateSeatingClasses();
@@ -49,6 +54,7 @@ public class DB {
         setAllTickets(globals.ticketsLinkedList);
         truncateSeats();
         setAllSeats();
+        setPartiesSeats();
     }
 
     public static void truncateSeatingClasses() {
@@ -59,13 +65,14 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<SeatingClasses> getAllSeatingClasses() {
         LinkedList<SeatingClasses> seatingClassesList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM SeatingClasses");
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
-                globals.seatingClassesIDs[id]=true;
+                globals.seatingClassesIDs[id] = true;
                 int numberOfRows = resultSet.getInt("numberOfRows");
                 int seatPricing = resultSet.getInt("seatPricing");
                 SeatingClasses seatingClasses = new SeatingClasses(id, numberOfRows, seatPricing);
@@ -76,6 +83,7 @@ public class DB {
         }
         return seatingClassesList;
     }
+
     public static SeatingClasses getSeatingClassByID(int seatingClassID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM SeatingClasses WHERE ID = ?")) {
             statement.setInt(1, seatingClassID);
@@ -83,20 +91,14 @@ public class DB {
             if (resultSet.next()) {
                 int numberOfRows = resultSet.getInt("numberOfRows");
                 int seatPricing = resultSet.getInt("seatPricing");
-                return new SeatingClasses(seatingClassID,numberOfRows, seatPricing);
+                return new SeatingClasses(seatingClassID, numberOfRows, seatPricing);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null; // Seating class not found or error occurred
     }
-//    public static SeatingClasses getSeatingClassBySeatID(int seatID) {
-//        globals.seatingClassesLinkedList=getAllSeatingClasses();
-//        for (SeatingClasses sc:globals.seatingClassesLinkedList){
-//            if (sc.ge)
-//        }
-//        return null; // Seat or seating class not found or error occurred
-//    }
+
     public static void setAllSeatingClasses(LinkedList<SeatingClasses> seatingClassesList) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO SeatingClasses (ID, numberOfRows, seatPricing) VALUES (?, ?, ?)")) {
             for (SeatingClasses seatingClasses : seatingClassesList) {
@@ -118,32 +120,33 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<Hall> getAllHalls() {
         LinkedList<Hall> hallList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Hall");
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
-                globals.hallsIDs[id]=true;
+                globals.hallsIDs[id] = true;
                 int rows = resultSet.getInt("rowsnum");
                 int columns = resultSet.getInt("columnsnum");
                 String name = resultSet.getString("name");
                 int seatingClass1ID = resultSet.getInt("seatingClass1ID");
                 int seatingClass2ID = resultSet.getInt("seatingClass2ID");
                 int seatingClass3ID = resultSet.getInt("seatingClass3ID");
-                SeatingClasses s1=new SeatingClasses(),s2=new SeatingClasses(),s3=new SeatingClasses();
-                for (SeatingClasses seatingClasses:globals.seatingClassesLinkedList){
-                    if (seatingClasses.getID()==seatingClass1ID){
-                        s1=seatingClasses;
+                SeatingClasses s1 = new SeatingClasses(), s2 = new SeatingClasses(), s3 = new SeatingClasses();
+                for (SeatingClasses seatingClasses : globals.seatingClassesLinkedList) {
+                    if (seatingClasses.getID() == seatingClass1ID) {
+                        s1 = seatingClasses;
                     }
-                    if(seatingClasses.getID()==seatingClass2ID){
-                        s2=seatingClasses;
+                    if (seatingClasses.getID() == seatingClass2ID) {
+                        s2 = seatingClasses;
                     }
-                    if (seatingClasses.getID()==seatingClass3ID){
-                        s3=seatingClasses;
+                    if (seatingClasses.getID() == seatingClass3ID) {
+                        s3 = seatingClasses;
                     }
                 }
-                Hall hall = new Hall(id,name, rows, columns, s1, s2, s3);
+                Hall hall = new Hall(id, name, rows, columns, s1, s2, s3);
                 hallList.add(hall);
             }
         } catch (SQLException e) {
@@ -151,6 +154,7 @@ public class DB {
         }
         return hallList;
     }
+
     public static Hall getHallByPartyID(int partyID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Hall WHERE ID IN (SELECT hallID FROM Party WHERE ID = ?)")) {
             statement.setInt(1, partyID);
@@ -163,19 +167,19 @@ public class DB {
                 int seatingClass1ID = resultSet.getInt("seatingClass1ID");
                 int seatingClass2ID = resultSet.getInt("seatingClass2ID");
                 int seatingClass3ID = resultSet.getInt("seatingClass3ID");
-                SeatingClasses s1=new SeatingClasses(),s2=new SeatingClasses(),s3=new SeatingClasses();
-                for (SeatingClasses seatingClasses:globals.seatingClassesLinkedList){
-                    if (seatingClasses.getID()==seatingClass1ID){
-                        s1=seatingClasses;
+                SeatingClasses s1 = new SeatingClasses(), s2 = new SeatingClasses(), s3 = new SeatingClasses();
+                for (SeatingClasses seatingClasses : globals.seatingClassesLinkedList) {
+                    if (seatingClasses.getID() == seatingClass1ID) {
+                        s1 = seatingClasses;
                     }
-                    if(seatingClasses.getID()==seatingClass2ID){
-                        s2=seatingClasses;
+                    if (seatingClasses.getID() == seatingClass2ID) {
+                        s2 = seatingClasses;
                     }
-                    if (seatingClasses.getID()==seatingClass3ID){
-                        s3=seatingClasses;
+                    if (seatingClasses.getID() == seatingClass3ID) {
+                        s3 = seatingClasses;
                     }
                 }
-                Hall hall= new Hall(id,name, rows, columns, s1, s2, s3);
+                Hall hall = new Hall(id, name, rows, columns, s1, s2, s3);
                 hall.setSeats(getHallSeats(hall.getID()));
                 return hall;
             }
@@ -184,6 +188,7 @@ public class DB {
         }
         return null; // Party or hall not found or error occurred
     }
+
     public static void setAllHalls(LinkedList<Hall> hallList) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Hall (ID, rowsnum, columnsnum, name, seatingClass1ID, seatingClass2ID, seatingClass3ID) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             for (Hall hall : hallList) {
@@ -209,6 +214,7 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<CreditCard> getAllCC() {
         LinkedList<CreditCard> creditCardList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
@@ -219,7 +225,7 @@ public class DB {
                 String cardNumber = resultSet.getString("cardNumber");
                 String holderName = resultSet.getString("holderName");
                 LocalDate expDate = resultSet.getDate("expDate").toLocalDate();
-                CreditCard creditCard = new CreditCard(id,cardNumber,CVV ,expDate, holderName);
+                CreditCard creditCard = new CreditCard(id, cardNumber, CVV, expDate, holderName);
                 creditCardList.add(creditCard);
             }
         } catch (SQLException e) {
@@ -227,12 +233,13 @@ public class DB {
         }
         return creditCardList;
     }
+
     public static void setAllCC() {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO CreditCard (ID,CVV, cardNumber, holderName, expDate) VALUES (?,?, ?, ?, ?)")) {
-            for (User user:globals.userLinkedList) {
-                CreditCard creditCard=user.getCard();
-                if(creditCard!=null) {
-                    statement.setInt(1,creditCard.getID());
+            for (User user : globals.userLinkedList) {
+                CreditCard creditCard = user.getCard();
+                if (creditCard != null) {
+                    statement.setInt(1, creditCard.getID());
                     statement.setInt(2, creditCard.getCVV());
                     statement.setString(3, creditCard.getCardNumber());
                     statement.setString(4, creditCard.getHolderName());
@@ -244,18 +251,19 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static CreditCard getCreditCardByUserID(int userID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM CreditCard WHERE ID IN (SELECT cardID FROM users WHERE ID = ?)")) {
             statement.setInt(1, userID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.ccIDs[ID]=true;
+                globals.ccIDs[ID] = true;
                 int CVV = resultSet.getInt("CVV");
                 String cardNumber = resultSet.getString("cardNumber");
                 String holderName = resultSet.getString("holderName");
                 LocalDate expDate = resultSet.getDate("expDate").toLocalDate();
-                return new CreditCard( ID,cardNumber,CVV ,expDate, holderName);
+                return new CreditCard(ID, cardNumber, CVV, expDate, holderName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -272,13 +280,14 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<User> getAllUsers() {
         LinkedList<User> userList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.usersIDs[ID]=true;
+                globals.usersIDs[ID] = true;
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
@@ -291,6 +300,7 @@ public class DB {
         }
         return userList;
     }
+
     public static User getUserByTicketID(int ticketID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE ID IN (SELECT userID FROM Ticket WHERE ID = ?)")) {
             statement.setInt(1, ticketID);
@@ -311,34 +321,33 @@ public class DB {
     }
 
     public static void setAllUsers(LinkedList<User> userList) {
-            for (User user : userList) {
-                if(user.getCard()!=null) {
-                    try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Users (ID, name, email, password, phoneNumber, cardID) VALUES (?, ?, ?, ?, ?, ?)")) {
-                        statement.setInt(1, user.getID());
-                        statement.setString(2, user.getName());
-                        statement.setString(3, user.getEmail());
-                        statement.setString(4, user.getPassword());
-                        statement.setString(5, user.getPhoneNumber());
-                        statement.setInt(6, user.getCard().getID());
-                        statement.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+        for (User user : userList) {
+            if (user.getCard() != null) {
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Users (ID, name, email, password, phoneNumber, cardID) VALUES (?, ?, ?, ?, ?, ?)")) {
+                    statement.setInt(1, user.getID());
+                    statement.setString(2, user.getName());
+                    statement.setString(3, user.getEmail());
+                    statement.setString(4, user.getPassword());
+                    statement.setString(5, user.getPhoneNumber());
+                    statement.setInt(6, user.getCard().getID());
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                else{
-                    try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Users (ID, name, email, password, phoneNumber) VALUES (?, ?, ?, ?, ?)")) {
-                        statement.setInt(1, user.getID());
-                        statement.setString(2, user.getName());
-                        statement.setString(3, user.getEmail());
-                        statement.setString(4, user.getPassword());
-                        statement.setString(5, user.getPhoneNumber());
-                        statement.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+            } else {
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Users (ID, name, email, password, phoneNumber) VALUES (?, ?, ?, ?, ?)")) {
+                    statement.setInt(1, user.getID());
+                    statement.setString(2, user.getName());
+                    statement.setString(3, user.getEmail());
+                    statement.setString(4, user.getPassword());
+                    statement.setString(5, user.getPhoneNumber());
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-
             }
+
+        }
     }
 
 
@@ -363,19 +372,20 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<Movie> getAllMovies() {
         LinkedList<Movie> movieList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Movie");
             while (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.moviesIDs[ID]=true;
+                globals.moviesIDs[ID] = true;
                 int screenTime = resultSet.getInt("screenTime");
                 String movieName = resultSet.getString("movieName");
                 String description = resultSet.getString("description");
-                String imgID=resultSet.getString("imgID");
+                String imgID = resultSet.getString("imgID");
                 // Assuming Image is stored as BLOB
-                Image img =new Image(imgID); // Retrieve the Image object from the resultSet
+                Image img = new Image(imgID); // Retrieve the Image object from the resultSet
                 LocalDate releaseDate = resultSet.getDate("releaseDate").toLocalDate();
                 Movie movie = new Movie(ID, screenTime, movieName, description, img, releaseDate);
                 movieList.add(movie);
@@ -385,20 +395,21 @@ public class DB {
         }
         return movieList;
     }
+
     public static Movie getMovieByPartyID(int partyID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Movie WHERE ID IN (SELECT movieID FROM Party WHERE ID = ?)")) {
             statement.setInt(1, partyID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.moviesIDs[ID]=true;
+                globals.moviesIDs[ID] = true;
 
                 int screenTime = resultSet.getInt("screenTime");
                 String movieName = resultSet.getString("movieName");
                 String description = resultSet.getString("description");
-                String imgID=resultSet.getString("imgID");
+                String imgID = resultSet.getString("imgID");
                 // Assuming Image is stored as BLOB
-                Image img =new Image(imgID); // Retrieve the Image object from the resultSet
+                Image img = new Image(imgID); // Retrieve the Image object from the resultSet
                 LocalDate releaseDate = resultSet.getDate("releaseDate").toLocalDate();
                 return new Movie(ID, screenTime, movieName, description, img, releaseDate);
             }
@@ -433,17 +444,18 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<Party> getAllParties() {
         LinkedList<Party> partyList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Party");
             while (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.partiesIDs[ID]=true;
+                globals.partiesIDs[ID] = true;
 
                 Party party = new Party(ID, getSlotByPartyID(ID), getMovieByPartyID(ID), getHallByPartyID(ID));
-                for (Movie movie:globals.moviesLinkedList){
-                    if (movie.getID()== Objects.requireNonNull(getMovieByPartyID(ID)).getID()){
+                for (Movie movie : globals.moviesLinkedList) {
+                    if (movie.getID() == Objects.requireNonNull(getMovieByPartyID(ID)).getID()) {
                         movie.addToParties(party);
                     }
                 }
@@ -452,9 +464,9 @@ public class DB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (Party party:partyList){
-            for (Hall hall:globals.hallsLinkedList){
-                if(hall.getID()==party.getHall().getID()){
+        for (Party party : partyList) {
+            for (Hall hall : globals.hallsLinkedList) {
+                if (hall.getID() == party.getHall().getID()) {
                     party.getHall().markSlotAsBooked(getSlotByPartyID(party.getID()));
                     hall.markSlotAsBooked(getSlotByPartyID(party.getID()));
                 }
@@ -463,13 +475,14 @@ public class DB {
 
         return partyList;
     }
+
     public static Party getPartyByTicketID(int ticketID) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Party WHERE ID IN (SELECT partyID FROM Ticket WHERE ID = ?)")) {
             statement.setInt(1, ticketID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.partiesIDs[ID]=true;
+                globals.partiesIDs[ID] = true;
 
                 return new Party(ID, getSlotByPartyID(ID), getMovieByPartyID(ID), getHallByPartyID(ID));
             }
@@ -501,44 +514,46 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static void getAllSeats() {
-        globals.hallsLinkedList=getAllHalls();
-        for (Hall hall:globals.hallsLinkedList){
+        globals.hallsLinkedList = getAllHalls();
+        for (Hall hall : globals.hallsLinkedList) {
             hall.setSeats(getHallSeats(hall.getID()));
         }
     }
-    public static Seat [][] getHallSeats(int hallID) {
+
+    public static Seat[][] getHallSeats(int hallID) {
         LinkedList<Seat> seatList = new LinkedList<>();
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Seat WHERE hallID = ?")) {
             statement.setInt(1, hallID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int seatID = resultSet.getInt("ID");
-                globals.seatsIDs[seatID]=true;
+                globals.seatsIDs[seatID] = true;
                 boolean booked = resultSet.getBoolean("booked");
                 int x = resultSet.getInt("x");
                 int y = resultSet.getInt("y");
                 int seatingClassID = resultSet.getInt("seatingClassID");
                 // Retrieve other seat properties as needed
                 SeatingClasses seatingClass = getSeatingClassByID(seatingClassID); // Assuming you have a method to retrieve SeatingClass by ID
-                Seat seat = new Seat(seatID, x, y,booked, seatingClass);
+                Seat seat = new Seat(seatID, x, y, booked, seatingClass);
                 seatList.add(seat);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         Hall haller = null;
-        globals.hallsLinkedList=getAllHalls();
-        for (Hall hall:globals.hallsLinkedList){
-            if(hall.getID()==hallID){
-                haller=hall;
+        globals.hallsLinkedList = getAllHalls();
+        for (Hall hall : globals.hallsLinkedList) {
+            if (hall.getID() == hallID) {
+                haller = hall;
                 break;
             }
         }
 
-        Seat [][] seats=new Seat[haller.getRows()][haller.getColumns()];
-        for (Seat seat:seatList){
-            seats[seat.getX()][seat.getY()]=seat;
+        Seat[][] seats = new Seat[haller.getRows()][haller.getColumns()];
+        for (Seat seat : seatList) {
+            seats[seat.getX()][seat.getY()] = seat;
         }
         return seats;
 
@@ -546,17 +561,17 @@ public class DB {
 
     public static void setAllSeats() {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Seat (ID, booked, x, y,seatingClassID,hallID) VALUES (?, ?, ?, ?, ?, ?)")) {
-            for (Hall hall:globals.hallsLinkedList) {
+            for (Hall hall : globals.hallsLinkedList) {
                 System.out.println(hall.getID());
-                for (int i=0;i<hall.getRows();i++){
-                    for (int j=0;j<hall.getColumns();j++){
-                        Seat seat=hall.getSeat(i,j);
+                for (int i = 0; i < hall.getRows(); i++) {
+                    for (int j = 0; j < hall.getColumns(); j++) {
+                        Seat seat = hall.getSeat(i, j);
                         statement.setInt(1, seat.getID());
                         statement.setBoolean(2, seat.isBooked());
                         statement.setInt(3, seat.getX());
                         statement.setInt(4, seat.getY());
                         statement.setInt(5, seat.getSeatingClass().getID());
-                        statement.setInt(6,hall.getID());
+                        statement.setInt(6, hall.getID());
                         statement.executeUpdate();
                     }
                 }
@@ -565,6 +580,7 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static void truncateTickets() {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");
@@ -573,31 +589,32 @@ public class DB {
             e.printStackTrace();
         }
     }
+
     public static LinkedList<Ticket> getAllTickets() {
-        globals.userLinkedList=getAllUsers();
+        globals.userLinkedList = getAllUsers();
         LinkedList<Ticket> ticketList = new LinkedList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Ticket");
             while (resultSet.next()) {
                 int ID = resultSet.getInt("ID");
-                globals.ticketsIDs[ID]=true;
+                globals.ticketsIDs[ID] = true;
                 LocalTime issueTime = resultSet.getTime("issueTime").toLocalTime();
                 double price = resultSet.getDouble("price");
-                String seats= resultSet.getString("seats");
-                int uID=resultSet.getInt("userID");
-                globals.userLinkedList=getAllUsers();
-                User user1=new User();
-                for (User user:globals.userLinkedList){
-                    if(user.getID()==uID){
-                        user1=user;
+                String seats = resultSet.getString("seats");
+                int uID = resultSet.getInt("userID");
+                globals.userLinkedList = getAllUsers();
+                User user1 = new User();
+                for (User user : globals.userLinkedList) {
+                    if (user.getID() == uID) {
+                        user1 = user;
                         System.out.println(uID);
                         break;
                     }
                 }
-                Ticket ticket = new Ticket(ID, price,user1, getPartyByTicketID(ID));
-                for (User user:globals.userLinkedList){
-                    if(user.getID()==uID){
-                        System.out.println(uID+"utkt");
+                Ticket ticket = new Ticket(ID, price, user1, getPartyByTicketID(ID));
+                for (User user : globals.userLinkedList) {
+                    if (user.getID() == uID) {
+                        System.out.println(uID + "utkt");
                         user.removeFromTickets(ticket);
                         user.addToTickets(ticket);
                         break;
@@ -612,6 +629,7 @@ public class DB {
         }
         return ticketList;
     }
+
     public static void setAllTickets(LinkedList<Ticket> ticketList) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Ticket (ID, issueTime, price, userID, partyID,seats) VALUES (?, ?, ?, ?, ?, ?)")) {
             for (Ticket ticket : ticketList) {
@@ -620,7 +638,7 @@ public class DB {
                 statement.setDouble(3, ticket.getPrice());
                 statement.setInt(4, ticket.getUser().getID());
                 statement.setInt(5, ticket.getParty().getID());
-                statement.setString(6,ticket.getSeats().toString());
+                statement.setString(6, ticket.getSeats().toString());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -629,5 +647,67 @@ public class DB {
     }
 
 
+    public static void getUsersTKTs() {
+        for (User user : globals.userLinkedList) {
+            LinkedList<Ticket> curr = new LinkedList<>();
+            for (Ticket tkt : globals.ticketsLinkedList) {
+                if (tkt.getUser().getID() == user.getID()) {
+                    curr.add(tkt);
+                }
+            }
+            user.setTickets(curr);
+        }
+    }
 
+    public static void getPartiesSeats() {
+        for (Ticket ticket : globals.ticketsLinkedList) {
+            String s = ticket.getSeats();
+            s = s.replace("[", "").replace("]", "");
+            StringTokenizer tokenizer = new StringTokenizer(s, ",");
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken().trim();
+                int number = Integer.parseInt(token);
+                for (Hall hall : globals.hallsLinkedList) {
+                    if (hall.getID() == ticket.getParty().getHall().getID()) {
+                        for (int i = 0; i < hall.getRows(); i++) {
+                            for (int j = 0; j < hall.getColumns(); j++) {
+                                if (hall.getSeat(i, j).getID() == number)
+                                    hall.markSeat(i, j, true);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    public static void setPartiesSeats() throws SQLException {
+        for (Ticket ticket : globals.ticketsLinkedList) {
+            String s = ticket.getSeats();
+            s = s.replace("[", "").replace("]", "");
+            StringTokenizer tokenizer = new StringTokenizer(s, ",");
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken().trim();
+                int number = Integer.parseInt(token);
+                for (Hall hall : globals.hallsLinkedList) {
+                    if (hall.getID() == ticket.getParty().getHall().getID()) {
+                        for (int i = 0; i < hall.getRows(); i++) {
+                            for (int j = 0;j< hall.getColumns(); j++) {
+                                String query = "UPDATE seat SET booked = ? WHERE ID = ?";
+
+                                if (hall.getSeat(i, j).getID() == number && hall.getSeat(i, j).isBooked()) {
+
+                                    PreparedStatement statement = connection.prepareStatement(query);
+                                    statement.setBoolean(1, hall.getSeat(i, j).isBooked());
+                                    statement.setInt(2, number);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

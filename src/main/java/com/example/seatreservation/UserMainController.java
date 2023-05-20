@@ -1,30 +1,32 @@
 package com.example.seatreservation;
 
-import com.gluonhq.charm.glisten.control.AppBar;
-import com.gluonhq.charm.glisten.control.Avatar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserMainController implements Initializable {
 
+public class UserMainController implements Initializable {
+    Stage ps;
     @FXML
-    public TableView<Movie> tvMoviesTable=new TableView<>();
+    public TableView<Movie> tvMoviesTable;
     @FXML
-    public TableColumn<Movie, Image> posterCol=new TableColumn<>();
+    public TableColumn<Movie, Image> posterCol;
     @FXML
-    public TableColumn<Movie, String> nameCol=new TableColumn<>();
+    public TableColumn<Movie, String> nameCol;
     public Button bookButton;
-//    public TextField tfMovieSearch;
+    public Button viewTKTbutton;
     ObservableList<Movie>movies= FXCollections.observableArrayList();
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

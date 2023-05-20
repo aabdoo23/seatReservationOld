@@ -1,12 +1,14 @@
 package com.example.seatreservation;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -24,7 +26,7 @@ public class NewMovieController implements Initializable {
     public AnchorPane mainPanel;
     public ImageView tfPath;
     public Button selectPathBtn;
-    int id=0;
+    int id;
     Image image;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,7 +70,7 @@ public class NewMovieController implements Initializable {
         }
 
     }
-    public void saveButton() {
+    public void saveButtonA() {
         if (tfMovieName.getText().isEmpty()  || tfPath==null || taDescription.getText().isEmpty()||dpReleaseDate.getValue()==null) {
             showErrorAlert("Error: Please fill all information");
             return;

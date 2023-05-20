@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 import static com.example.seatreservation.globals.prevHall;
 import static com.example.seatreservation.globals.spinnerTF;
 
-public final class newHallController implements Initializable {
+
+public class newHallController implements Initializable {
 
     public TextField tfID;
     public TextField rowsSpinner;
@@ -110,8 +111,7 @@ public final class newHallController implements Initializable {
         Hall hall=new Hall(id,hn,nr,nc,sc1,sc2,sc3);
         globals.hallsLinkedList.add(hall);
         globals.showConfirmationAlert("Hall registered");
-
-        Stage stage=(Stage) tfID.getScene().getWindow();
+        Stage stage=(Stage) mainPanel.getScene().getWindow();
         stage.close();
     }
 }

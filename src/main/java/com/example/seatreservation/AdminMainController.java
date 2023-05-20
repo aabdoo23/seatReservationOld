@@ -1,5 +1,4 @@
 package com.example.seatreservation;
-
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -47,7 +46,6 @@ public class AdminMainController implements Initializable {
     public void newParty() throws IOException {
         globals.openNewForm("newParty.fxml","New party");//open new party form
         updateDisplay();
-
     }
     public void newUser() throws IOException {
         globals.openNewForm("newUserView.fxml","New user");//open new user form
@@ -77,5 +75,5 @@ public class AdminMainController implements Initializable {
         globals.prevParty=globals.partyLinkedList.get(partiesList.getSelectionModel().getSelectedIndex());
         globals.openNewForm("newParty.fxml","View party");
         globals.prevParty=null;
-    }//conjtinue
+    }
 }

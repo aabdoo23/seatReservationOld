@@ -4,14 +4,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-
-import javax.swing.*;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class CheckoutTicketController implements Initializable {

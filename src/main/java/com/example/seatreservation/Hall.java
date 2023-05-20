@@ -30,11 +30,10 @@ public class Hall {
         this.seatingClass1=sc1;
         this.seatingClass2=sc2;
         this.seatingClass3=sc3;
-        boolean[] seatsIDs=new boolean[rows*columns];
         this.seats=new Seat[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                seats[i][j]=new Seat(globals.createNewSeqID(seatsIDs),i,j);
+                seats[i][j]=new Seat(globals.createNewSeqID(globals.seatsIDs),i,j);
             }
         }
         for (int i = 0; i < seatingClass1.getNumberOfRows(); i++) {
@@ -46,12 +45,12 @@ public class Hall {
         for (int i = 0; i < seatingClass2.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
                 seats[i+ seatingClass1.getNumberOfRows()][j].setSeatingClass(seatingClass2);
-                globals.seatsLinkedList.add(seats[i][j]);
+                globals.seatsLinkedList.add(seats[i+ seatingClass1.getNumberOfRows()][j]);
             }
         }for (int i = 0; i < seatingClass3.getNumberOfRows(); i++) {
             for (int j = 0; j < columns; j++) {
                 seats[i+ seatingClass1.getNumberOfRows()+ seatingClass2.getNumberOfRows()][j].setSeatingClass(seatingClass3);
-                globals.seatsLinkedList.add(seats[i][j]);
+                globals.seatsLinkedList.add(seats[i+ seatingClass1.getNumberOfRows()+ seatingClass2.getNumberOfRows()][j]);
             }
         }
 
