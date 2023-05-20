@@ -584,10 +584,23 @@ public class DB {
                 LocalTime issueTime = resultSet.getTime("issueTime").toLocalTime();
                 double price = resultSet.getDouble("price");
                 String seats= resultSet.getString("seats");
-                Ticket ticket = new Ticket(ID, price, getUserByTicketID(ID), getPartyByTicketID(ID));
+                int uID=resultSet.getInt("userID");
+                globals.userLinkedList=getAllUsers();
+                User user1=new User();
                 for (User user:globals.userLinkedList){
-                    if(user.getID()==getUserByTicketID(ID).getID()){
+                    if(user.getID()==uID){
+                        user1=user;
+                        System.out.println(uID);
+                        break;
+                    }
+                }
+                Ticket ticket = new Ticket(ID, price,user1, getPartyByTicketID(ID));
+                for (User user:globals.userLinkedList){
+                    if(user.getID()==uID){
+                        System.out.println(uID+"utkt");
+                        user.removeFromTickets(ticket);
                         user.addToTickets(ticket);
+                        break;
                     }
                 }
                 ticket.setIssueTime(issueTime);

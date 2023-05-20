@@ -87,7 +87,8 @@ public class User {
                 "\n, email=" + email +
                 "\n, password=" + password +
                 "\n, phoneNumber=" + phoneNumber +
-                "\n, card=" + card +
-                "\nTKTs="+tickets;
+                "\n, card=" + card
+                + "\nTKTs="+tickets
+                ;
     }
 }

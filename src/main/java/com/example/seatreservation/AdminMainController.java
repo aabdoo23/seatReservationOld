@@ -54,9 +54,9 @@ public class AdminMainController implements Initializable {
         updateDisplay();
     }
     public void prevTKT() throws IOException {
-        globals.prevTKT=globals.ticketsLinkedList.get(ticketsList.getSelectionModel().getSelectedIndex());
+        globals.currentTKT=globals.ticketsLinkedList.get(ticketsList.getSelectionModel().getSelectedIndex());
         globals.openNewForm("checkoutTicket.fxml","View ticket");//open new user form
-        globals.prevTKT=null;
+        globals.currentTKT=null;
     }
     public void prevUser() throws IOException {
         globals.previewedUser=globals.userLinkedList.get(usersList.getSelectionModel().getSelectedIndex());

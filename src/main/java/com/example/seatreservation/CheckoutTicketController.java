@@ -6,8 +6,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class CheckoutTicketController implements Initializable {
@@ -86,10 +90,21 @@ public class CheckoutTicketController implements Initializable {
             ticket.getUser().setCard(new CreditCard(globals.createNewRandomID(globals.ccIDs),tfCN.getText(),Integer.parseInt(pfCvv.getText()),dpExpDate.getValue(),tfCHN.getText()));
         }
         globals.showConfirmationAlert("Ticket booked");
-        Stage s=(Stage)tfID.getParent().getScene().getWindow();
-        s.close();
+//        Stage s=(Stage)tfID.getParent().getScene().getWindow();
+//        s.close();
     }
     public void printTKT(){
-
+        PrinterJob job = PrinterJob.getPrinterJob();
+        PrintTicket printable = new PrintTicket(ticket);
+        job.setPrintable(printable);
+        if (job.printDialog()) {
+            try {
+                job.print();
+                globals.showConfirmationAlert("Print successful");
+            } catch (PrinterException x) {
+                globals.showErrorAlert("Printing ERROR");
+                x.printStackTrace();
+            }
+        }
     }
 }
