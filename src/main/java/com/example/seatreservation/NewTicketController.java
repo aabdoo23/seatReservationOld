@@ -53,7 +53,6 @@ public class NewTicketController implements Initializable {
         lbMovieName.setText(movie.getMovieName());//movie name
         ivPoster.setImage(movie.getImg());//movie poster
         dpDate.setValue(LocalDate.now());//date picker for party day
-        updateDisplay();
         dpDate.valueProperty().addListener((observable, oldValue, newValue) -> {
             updateDisplay();
         });
@@ -164,8 +163,6 @@ public class NewTicketController implements Initializable {
         }
         else{
             globals.showErrorAlert("No available parties for this date.");
-            Stage scene=(Stage) mainPanel.getParent().getScene().getWindow();
-            scene.close();
         }
     }
     public void chooseParty(){ //selectBTN

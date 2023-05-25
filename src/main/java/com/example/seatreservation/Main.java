@@ -8,19 +8,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Objects;
 
 public class Main extends Application {
     static AnchorPane root=new AnchorPane();
-    static List<AnchorPane>grids=new ArrayList<>();
-    private static int cur_idx=0;
+//    static List<AnchorPane>grids=new ArrayList<>();
+//    private static int cur_idx=0;
 //    Scene scene=new Scene(root);
     @Override
     public void start(Stage stage) throws IOException {
-        grids.add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainMenu.fxml"))));
-        root=getPane(0);
+        root=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainMenu.fxml")));
         Scene scene = new Scene(root, 820, 555);
         stage.setTitle("Login");
         stage.setScene(scene);
@@ -29,15 +28,15 @@ public class Main extends Application {
 
 
 
-    public static AnchorPane getPane(int idx) {
-        return grids.get(idx);
-    }
-    public static void setPane(int idx){
+//    public static AnchorPane getPane(int idx) {
+//        return grids.get(idx);
+//    }
+//    public static void setPane(int idx){
 //        root=getPane(idx);
-        root.getChildren().remove(grids.get(cur_idx));
-        root.getChildren().add(grids.get(idx));
-        cur_idx=idx;
-    }
+//        root.getChildren().remove(grids.get(cur_idx));
+//        root.getChildren().add(grids.get(idx));
+//        cur_idx=idx;
+//    }
 
     public static void main(String[] args) throws SQLException {
 

@@ -46,14 +46,14 @@ public class CheckoutTicketController implements Initializable {
         tfPrice.setText(Double.toString(ticket.getPrice()));//set tkt price
         tfSeatsBooked.setText(ticket.getSeats().toString());//seats chosen
         dpExpDate.setValue(LocalDate.now()); //date preset to now
+        ToggleGroup tg=new ToggleGroup();
+        rbCC.setToggleGroup(tg);
+        rbCash.setToggleGroup(tg);
         rbCash.setOnAction(e->{//if clicked on rbCash
-            rbCash.selectedProperty().setValue(!rbCash.isSelected()); //switch selection
-            rbCC.selectedProperty().setValue(!rbCC.isSelected());//switch selection
             apCC.setDisable(rbCash.isSelected());//if selected cash disable cc part
         });
         rbCC.setOnAction(e -> {//if clicked on rbCC
-            rbCash.selectedProperty().setValue(!rbCash.isSelected()); //switch selection
-            rbCC.selectedProperty().setValue(!rbCC.isSelected());//switch selection
+            apCC.setDisable(rbCash.isSelected());
         });
         if(ticket.getUser().getCard()==null){//if user has no card
             cbUseCC.setDisable(true);//disable cc part

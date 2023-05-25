@@ -34,7 +34,7 @@ public class DB {
         globals.ticketsLinkedList = getAllTickets();
         globals.userLinkedList = getAllUsers();
         getUsersTKTs();
-        getPartiesSeats();
+//        getPartiesSeats();
     }
 
     public static void setALL() throws SQLException {
@@ -54,7 +54,7 @@ public class DB {
         setAllTickets(globals.ticketsLinkedList);
         truncateSeats();
         setAllSeats();
-        setPartiesSeats();
+//        setPartiesSeats();
     }
 
     public static void truncateSeatingClasses() {
@@ -659,55 +659,54 @@ public class DB {
         }
     }
 
-    public static void getPartiesSeats() {
-        for (Ticket ticket : globals.ticketsLinkedList) {
-            String s = ticket.getSeats();
-            s = s.replace("[", "").replace("]", "");
-            StringTokenizer tokenizer = new StringTokenizer(s, ",");
-            while (tokenizer.hasMoreTokens()) {
-                String token = tokenizer.nextToken().trim();
-                int number = Integer.parseInt(token);
-                for (Hall hall : globals.hallsLinkedList) {
-                    if (hall.getID() == ticket.getParty().getHall().getID()) {
-                        for (int i = 0; i < hall.getRows(); i++) {
-                            for (int j = 0; j < hall.getColumns(); j++) {
-                                if (hall.getSeat(i, j).getID() == number)
-                                    hall.markSeat(i, j, true);
-                            }
-                        }
+//    public static void getPartiesSeats() {
+//        for (Ticket ticket : globals.ticketsLinkedList) {
+//            String s = ticket.getSeats();
+//            s = s.replace("[", "").replace("]", "");
+//            StringTokenizer tokenizer = new StringTokenizer(s, ",");
+//            while (tokenizer.hasMoreTokens()) {
+//                String token = tokenizer.nextToken().trim();
+//                int number = Integer.parseInt(token);
+//                for (Hall hall : globals.hallsLinkedList) {
+//                    if (hall.getID() == ticket.getParty().getHall().getID()) {
+//                        for (int i = 0; i < hall.getRows(); i++) {
+//                            for (int j = 0; j < hall.getColumns(); j++) {
+//                                if (hall.getSeat(i, j).getID() == number)
+//                                    hall.markSeat(i, j, true);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-                    }
-
-                }
-            }
-        }
-    }
-
-    public static void setPartiesSeats() throws SQLException {
-        for (Ticket ticket : globals.ticketsLinkedList) {
-            String s = ticket.getSeats();
-            s = s.replace("[", "").replace("]", "");
-            StringTokenizer tokenizer = new StringTokenizer(s, ",");
-            while (tokenizer.hasMoreTokens()) {
-                String token = tokenizer.nextToken().trim();
-                int number = Integer.parseInt(token);
-                for (Hall hall : globals.hallsLinkedList) {
-                    if (hall.getID() == ticket.getParty().getHall().getID()) {
-                        for (int i = 0; i < hall.getRows(); i++) {
-                            for (int j = 0;j< hall.getColumns(); j++) {
-                                String query = "UPDATE seat SET booked = ? WHERE ID = ?";
-
-                                if (hall.getSeat(i, j).getID() == number && hall.getSeat(i, j).isBooked()) {
-
-                                    PreparedStatement statement = connection.prepareStatement(query);
-                                    statement.setBoolean(1, hall.getSeat(i, j).isBooked());
-                                    statement.setInt(2, number);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //
+//    public static void setPartiesSeats() throws SQLException {
+//        for (Ticket ticket : globals.ticketsLinkedList) {
+//            String s = ticket.getSeats();
+//            s = s.replace("[", "").replace("]", "");
+//            StringTokenizer tokenizer = new StringTokenizer(s, ",");
+//            while (tokenizer.hasMoreTokens()) {
+//                String token = tokenizer.nextToken().trim();
+//                int number = Integer.parseInt(token);
+//                for (Hall hall : globals.hallsLinkedList) {
+//                    if (hall.getID() == ticket.getParty().getHall().getID()) {
+//                        for (int i = 0; i < hall.getRows(); i++) {
+//                            for (int j = 0; j < hall.getColumns(); j++) {
+//                                String query = "UPDATE seat SET booked = ? WHERE ID = ?";
+//
+//                                if (hall.getSeat(i, j).getID() == number && hall.getSeat(i, j).isBooked()) {
+//
+//                                    PreparedStatement statement = connection.prepareStatement(query);
+//                                    statement.setBoolean(1, hall.getSeat(i, j).isBooked());
+//                                    statement.setInt(2, number);
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
